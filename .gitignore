@@ -9,4 +9,9 @@
 /composer.phar
 /vendor/
 /web/bundles/
+/web/css/
+/web/avatars/
+/web/js/
+/web/logo/
+/web/media/
 /.idea/
