@@ -14,6 +14,13 @@ parameters:
     mailer_host:       127.0.0.1
     mailer_user:       ~
     mailer_password:   ~
+    mailer_delivery_address: ~
+    mailer_port:       25
+    mailer_encryption: ~
+    locale: nl
+
+    from_email_address: ~
+    from_name: ~
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt

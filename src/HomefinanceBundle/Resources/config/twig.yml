@@ -1,0 +1,7 @@
+services:
+    homefinance.twig_administration_extension:
+        class: HomefinanceBundle\Twig\AdministrationExtension
+        arguments: [@homefinance.administration.access_manager, @homefinance.administration.manager, @homefinance.transaction.manager]
+        public: false
+        tags:
+            - { name: twig.extension }

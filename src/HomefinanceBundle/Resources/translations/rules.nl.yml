@@ -1,0 +1,49 @@
+manage_rules.title: Automatische verwerking
+rule.add: Voeg een regel toe
+rule: Regel
+rule.conditions: Condities
+rule.actions: Acties
+rule.delete: Verwijderen
+rule.delete_confirm: Weet u zeker dat u deze regel wilt verwijderen?
+
+rule.add_condition: Voeg conditie toe
+rules.add_condition.title: Voeg conditie toe
+rules.condition.condition.label: Conditie
+rules.condition.condition.empty: -- Selecteer een conditie --
+rules.condition.update.btn-label: Opslaan
+rules.edit_condition.title: Bewerk conditie
+rule.condition.edit: Bewerk conditie
+rule.condition.delete: Verwijder conditie
+rule.condition.delete_confirm: Weet u zeker dat u deze conditie wilt verwijderen?
+condition.deleted: Conditie verwijderd
+
+rule.add_action: Voeg actie toe
+rules.add_action.title: Voeg actie toe
+rules.action.action.label: Actie
+rules.action.action.empty: -- Selecteer een actie --
+rules.action.update.btn-label: Opslaan
+rules.edit_action.title: Bewerk actie
+rule.action.edit: Bewerk actie
+rule.action.delete: Verwijder actie
+rule.action.delete_confirm: Weet u zeker dat u deze actie wilt verwijderen?
+action.deleted: Actie verwijderd
+
+rules.conditions.check_name.label: Als naam gelijk is aan %name%
+rules.conditions.check_name.name: Match naam
+rules.condition.check_name.name.label: Als naam gelijk is aan
+
+rules.conditions.check_iban.label: Als IBAN gelijk is aan %iban%
+rules.conditions.check_iban.name: Match IBAN
+rules.condition.check_iban.iban.label: Als IBAN gelijk is aan
+
+rules.actions.add_tag.name: Voeg tags toe
+rules.action.add_tag.tags.label: Tags
+rules.actions.add_tag.label: Voeg de volgende tags toe: %tags%
+
+rules.actions.set_category.name: Stel categorie in
+rules.action.set_category.category.empty: -- Selecteer een categorie --
+rules.action.set_category.category.label: Categorie
+rules.actions.set_category.label: Stel categorie in op %category%
+
+rules.actions.set_processed.name: Markeer transactie als verwerkt
+rules.actions.set_processed.label: Markeer transactie als verwerkt

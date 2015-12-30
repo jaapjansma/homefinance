@@ -1,0 +1,124 @@
+{% trans_default_domain "homefinance" %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}{% endblock %} | {{ 'homefinance.app.title'|trans }}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Bootstrap -->
+        <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen">
+        <link href="{{ asset('css/jquery.treegrid.css') }}" rel="stylesheet" media="screen">
+        <link href="{{ asset('css/bootstrap-datepicker.css') }}" rel="stylesheet" media="screen">
+        {% stylesheets 'bundles/homefinance/css/*' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+
+        <!-- HTML5 Shim and Respond.js add IE8 support of HTML5 elements and media queries -->
+        {% include 'BraincraftedBootstrapBundle::ie8-support.html.twig' %}
+
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <style type="text/css">
+            body {
+                color: #553b20;
+                background-color: #a2998a;
+            }
+            a {
+                color: #e37a12;
+            }
+            #branding {
+                background-color: #fff8e6;
+            }
+            .panel.no-top-rounded-corners {
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+            }
+            .panel.no-bottom-rounded-corners {
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+            .panel.no-margin-bottom {
+                margin-bottom: 0px;
+            }
+            .panel.margin-top {
+                margin-top: 20px;
+            }
+            .nav-white a {
+                background-color: #fff;
+            }
+            .navbar .avatar {
+                padding-left: 50px;
+            }
+            .navbar .avatar img {
+                position: absolute;
+                left: 5px;
+                top: 5px;
+            }
+            .profile-picture-big {
+                width: 200px;
+                height: 200px;
+                background-color: #e37a12;
+                position: relative;
+                display: block;
+            }
+            .profile-picture-big img.preview {
+                height: 100%;
+                width: 100%;
+            }
+            .profile-picture-big .edit {
+                font-size: 20px;
+                background-color: #e7e7e7;
+                position: relative;
+                top: -30px;
+                padding: 5px;
+            }
+            .profile-picture-big .remove {
+                position: relative;
+                top: -30px;
+                width: 100%;
+                height: 30px;
+            }
+            .treegrid-expander {
+                font-size: 9px;
+                height: auto;
+            }
+            .treegrid-indent {
+                height: auto;
+            }
+            .no-move-up-down-xs {
+                width: 24px;
+                display: inline-block;
+            }
+            .action-menu {
+                margin-bottom: 20px;
+            }
+        </style>
+    </head>
+    <body>
+
+        {%  block body %}{% endblock %}
+
+        <!-- jQuery (necessary for Bootstraps JavaScript plugins) -->
+        <script src="{{ asset('js/jquery.js') }}"></script>
+        <!-- Include all JavaScripts, compiled by Assetic -->
+        <script src="{{ asset('js/bootstrap.js') }}"></script>
+        <script src="{{ asset('js/jquery.treegrid.js') }}"></script>
+        <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
+        {% javascripts '@HomefinanceBundle/Resources/public/js/*' %}
+            <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('.tree').treegrid();
+                $('.datepicker').datepicker({
+                    todayBtn: "linked",
+                    language: "nl",
+                    todayHighlight: true
+                });
+            });
+        </script>
+
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

@@ -1,0 +1,49 @@
+{% extends 'HomefinanceBundle:layout:administration.html.twig' %}
+
+{% trans_default_domain "administration" %}
+
+{% block title %}
+    {{ 'manage_bank_accounts.title'|trans }}
+{% endblock %}
+
+{% block form_title %}
+    {{ 'manage_bank_accounts.title'|trans }}
+{% endblock %}
+
+{% block form %}
+    <table class="table table-striped table-hover table-condensed">
+        <thead>
+            <tr>
+                <th>{{ 'bank_account.iban'|trans  }}</th>
+                <th>{{ 'bank_account.name'|trans }}</th>
+                <th>{{ 'bank_account.starting_balance'|trans }}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for account in accounts %}
+                <tr>
+                    <td>
+                        {{ account.iban }}
+                    </td>
+                    <td>{{ account.name }}</td>
+                    <td>&euro; {{ account.startingBalance|number_format(2, ',', '.') }}</td>
+                    <td class="text-right">
+                        {% if (has_access_to_administration(app.user, administration, 'Full access')) %}
+                            <a href="{{ url('edit_bank_account', {'id': account.id}) }}" class="btn btn-xs btn-success">
+                                <i class="glyphicon glyphicon-pencil"></i>&nbsp; {{ 'bank_account.edit'|trans }}
+                            </a>
+                            <a href="{{ url('delete_bank_account', {'id': account.id}) }}" class="btn btn-xs btn-danger" onclick="return confirm('{{ 'bank_account.delete_confirm'|trans }}');">
+                                <i class="glyphicon glyphicon-trash"></i>&nbsp; {{ 'bank_account.delete'|trans }}
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if (has_access_to_administration(app.user, administration, 'Full access')) %}
+        <a class="btn btn-success" href="{{ url('add_bank_account') }}" role="button"><i class="glyphicon glyphicon-plus"></i> {{ 'bank_account.add'|trans() }}</a>
+    {% endif %}
+{% endblock %}

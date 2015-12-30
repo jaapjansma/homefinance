@@ -1,0 +1,65 @@
+{% extends 'HomefinanceBundle:layout:administration.html.twig' %}
+
+{% trans_default_domain "administration" %}
+
+{% block title %}
+    {{ 'manage_categories.title'|trans }}
+{% endblock %}
+
+{% block form_title %}
+    {{ 'manage_categories.title'|trans }}
+{% endblock %}
+
+{% block form %}
+    <table class="table tree table-striped table-hover table-condensed">
+        <thead>
+            <tr>
+                <th>{{ 'category.title'|trans  }}</th>
+                <th>{{ 'category.type'|trans }}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cat in categories %}
+                <tr class="treegrid-{{ cat.id }} {% if (cat.parent and not cat.isDirectSubOfRoot()) %}treegrid-parent-{{ cat.parent.id }}{% endif %}">
+                    <td>
+                        {% for i in 1..cat.level %}
+                            <span class="treegrid-indent"></span>
+                        {% endfor %}
+                        <span class="treegrid-expander"></span>
+                        {{ cat.title }}
+                    </td>
+                    <td>{{ cat.type|trans }}</td>
+                    <td class="text-right">
+                        {% if (has_access_to_administration(app.user, administration, 'Full access')) %}
+                            {% if not cat.isFirstSibling() %}
+                                <a href="{{ url('move_category_up', {'slug': cat.slug}) }}" class="btn btn-xs btn-default">
+                                    <i class="glyphicon glyphicon-arrow-up"></i>
+                                </a>
+                            {% else %}
+                                <span class="no-move-up-down-xs"></span>
+                            {% endif %}
+                            {% if not cat.isLastSibling() %}
+                                <a href="{{ url('move_category_down', {'slug': cat.slug}) }}" class="btn btn-xs btn-default">
+                                    <i class="glyphicon glyphicon-arrow-down"></i>
+                                </a>
+                            {% else %}
+                                <span class="no-move-up-down-xs"></span>
+                            {% endif %}
+                            <a href="{{ url('edit_category', {'slug': cat.slug}) }}" class="btn btn-xs btn-success">
+                                <i class="glyphicon glyphicon-pencil"></i>&nbsp; {{ 'category.edit'|trans }}
+                            </a>
+                            <a href="{{ url('delete_category', {'slug': cat.slug}) }}" class="btn btn-xs btn-danger" onclick="return confirm('{{ 'category.delete_confirm'|trans }}');">
+                                <i class="glyphicon glyphicon-trash"></i>&nbsp; {{ 'category.delete'|trans }}
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if (has_access_to_administration(app.user, administration, 'Full access')) %}
+        <a class="btn btn-success" href="{{ url('add_category') }}" role="button"><i class="glyphicon glyphicon-plus"></i> {{ 'category.add'|trans() }}</a>
+    {% endif %}
+{% endblock %}

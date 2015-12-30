@@ -1,0 +1,114 @@
+user.name.label: Je naam
+user.email.label: Je e-mailadres
+user.password.label1: Wachtwoord
+user.password.label2: Herhaal wachtwoord
+user.administration_name.label: Naam van de administratie
+user.administration_name.help_text: Optioneel. Geef je administratie een naam.
+user.register.btn-label: Registreren
+user.agree: Ik ga akkoord met de algemene voorwaarden
+user.your_current_password: Je huidige wachtwoord
+
+login.title: Inloggen
+login.email.placeholder: Je e-mailadres
+login.password.placeholder: Je wachtwoord
+login.login-btn-label: Inloggen
+login.remember-me: Onthoudt me
+login.dont-have-an-account: Heb je nog geen account? <a href="%registration_link%">Maak dan eerst account aan</a>
+
+Authentication request could not be processed due to a system problem.: Authenticatie is niet gelukt.
+Invalid credentials.: Onbekend e-mailadres en/of wachtwoord
+
+registration:
+  create-an-account:
+    title: Maak een account aan
+    already-have-an-account: Heb je al een account? <a href="%login_link%">Log dan in</a>
+  success:
+    title: Bedankt voor je registratie
+    body: |
+      Bedankt voor je registratie.
+
+      Na bevestiging van je e-mailadres kun je inloggen en je huishoudboekje gaan bijhouden.
+
+confirmation:
+  title: Bevestig je account
+  token.label: Token
+  token.placeholder: Type of plak hier je token
+  token.help_text: De token is verstuurd naar je e-mail adres
+  confirm.btn-label: Bevestigen
+  success:
+    title: Je account is bevestigd
+    body: |
+      Je account is bevestigd. Je kunt nu inloggen.
+
+      <a href="%login_link%">Login</a>
+lost_password:
+  link_title: Wachtwoord vergeten?
+  title: Wachtwoord vergeten
+  email.label: Je e-mail adres
+  success_message: Er is een e-mail verstuurd met daarin een link om eenmalig een nieuw wachtwoord in te stellen.
+  confirm.btn-label: Vraag een nieuw wachtwoord op
+  email:
+    subject: Nieuw wachtwoord
+    message: |
+      Beste %name%,
+
+      Je hebt aangegeven dat je wachtwoord vergeten bent. Klik op onderstaande link om eenmalig een nieuw wachtwoord in te stellen.
+
+      %fullConfirmationUrl%
+
+      Werkt bovenstaande niet?
+      Ga dan naar %confirmationUrl%
+      en vul onderstaande token in:
+      %token%
+
+    html_message: |
+      Beste %name%,
+
+      Je hebt aangegeven dat je wachtwoord vergeten bent. Klik op onderstaande link om eenmalig een nieuw wachtwoord in te stellen.
+
+      <a href="%fullConfirmationUrl%">%confirmationUrl%</a>
+
+      Werkt bovenstaande niet?
+      Ga dan naar <a href="%confirmationUrl%">%confirmationUrl%</a>
+      en vul onderstaande token in:
+      %token%
+reset_password:
+  title: Herstel je wachtwoord
+  token.label: Token
+  token.placeholder: Type of plak hier je token
+  token.help_text: De token is verstuurd naar je e-mail adres
+  token.btn-label: Bevestigen
+  btn-label: Bevestigen
+  success:
+      title: Je wachtwoord is hersteld
+      body: |
+        Je wachtwoord is hersteld. Je kunt nu inloggen met je nieuwe wachtwoord.
+
+        <a href="%login_link%">Login</a>
+  email:
+    subject: Wachtwoord is hersteld
+    message: |
+      Beste %name%,
+
+      Je hebt een nieuw wachtwoord ingevoerd. Indien je dit niet zelf hebt gedaan neem dan contact op.
+
+    html_message: |
+      Beste %name%,
+
+      Je hebt een nieuw wachtwoord ingevoerd. Indien je dit niet zelf hebt gedaan neem dan contact op.
+profile:
+  title: Wijzig je profiel
+  update.btn-label: Update profiel
+  updated: Je wijzigingen zijn opgeslagen
+change_password:
+  title: Wijzig je wachtwoord
+  update.btn-label: Wijzig wachtwoord
+  updated: Je wachtwoord is gewijzigd
+change-avatar:
+  title: Wijzig je profielfoto
+  upload: Uploaden
+  file: Selecteer een bestand
+  remove: Verwijder profiel foto
+
+new_account_confirmation:
+  title: Maak een wachtwoord aan

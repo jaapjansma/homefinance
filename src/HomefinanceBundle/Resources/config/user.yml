@@ -1,0 +1,52 @@
+parameters:
+    homefinance.user.manager.class_name: HomefinanceBundle\User\Manager\UserManager
+    homefinance.user.email_confirmation.class_name: HomefinanceBundle\User\EmailConfirmationService
+    homefinance.user.form.registration.class_name: HomefinanceBundle\User\Form\RegistrationType
+    homefinance.user.form.profile.class_name: HomefinanceBundle\User\Form\ProfileType
+    homefinance.user.form.confirmation.class_name: HomefinanceBundle\User\Form\ConfirmationType
+    homefinance.user.form.lost_password.class_name: HomefinanceBundle\User\Form\LostPasswordType
+    homefinance.user.form.reset_password_token.class_name: HomefinanceBundle\User\Form\ResetPasswordTokenType
+    homefinance.user.form.reset_password.class_name: HomefinanceBundle\User\Form\ResetPasswordType
+    homefinance.user.form.change_password.class_name: HomefinanceBundle\User\Form\ChangePasswordType
+    homefinance.user.factory.class_name: HomefinanceBundle\User\Factory\UserFactory
+
+services:
+    homefinance.user.factory:
+        class: %homefinance.user.factory.class_name%
+        arguments: [@security.password_encoder]
+    homefinance.user.manager:
+        class: %homefinance.user.manager.class_name%
+        arguments: [@doctrine.orm.default_entity_manager,@event_dispatcher]
+    homefinance.user.email_confirmation:
+        class: %homefinance.user.email_confirmation.class_name%
+        arguments: [@homefinance.mailer, @homefinance.tokengenerator]
+        tags:
+            - { name: kernel.event_subscriber }
+    homefinance.user.form.lost_password:
+        class: %homefinance.user.form.lost_password.class_name%
+        tags:
+            - { name: form.type, alias: lost_password }
+    homefinance.user.form.reset_password_token:
+        class: %homefinance.user.form.reset_password_token.class_name%
+        tags:
+            - { name: form.type, alias: reset_password_token }
+    homefinance.user.form.reset_password:
+        class: %homefinance.user.form.reset_password.class_name%
+        tags:
+            - { name: form.type, alias: reset_password }
+    homefinance.user.form.change_password:
+        class: %homefinance.user.form.change_password.class_name%
+        tags:
+            - { name: form.type, alias: change_password }
+    homefinance.user.form.registration:
+        class: %homefinance.user.form.registration.class_name%
+        tags:
+            - { name: form.type, alias: registration }
+    homefinance.user.form.profile:
+        class: %homefinance.user.form.profile.class_name%
+        tags:
+            - { name: form.type, alias: profile }
+    homefinance.user.form.confirmation:
+        class: %homefinance.user.form.confirmation.class_name%
+        tags:
+            - { name: form.type, alias: confirmation }

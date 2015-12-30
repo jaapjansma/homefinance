@@ -1,0 +1,12 @@
+{% extends 'HomefinanceBundle:layout:small_form.html.twig' %}
+
+{% trans_default_domain "user" %}
+
+{% block title %}
+    {{ 'confirmation.success.title'|trans }}
+{% endblock %}
+
+{% block content %}
+    <h2>{{ 'confirmation.success.title'|trans }}</h2>
+    <p>{{ 'confirmation.success.body'|trans({'%login_link%': url('login')})|raw|nl2br }}</p>
+{% endblock %}

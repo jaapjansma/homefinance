@@ -1,0 +1,16 @@
+parameters:
+  homefinance.importer.factory.class_name: HomefinanceBundle\Importer\Factory
+
+services:
+  homefinance.importer.factory:
+    class: %homefinance.importer.factory.class_name%
+  homefinace.importer.rabobankcsv:
+    class: HomefinanceBundle\Importer\Importers\RabobankCsv
+    arguments: [@homefinance.bank_account.manager]
+    tags:
+      - { name: homefinance.importer, alias: rabobankcsv }
+  homefinace.importer.asnbankcsv:
+      class: HomefinanceBundle\Importer\Importers\AsnBankCsv
+      arguments: [@homefinance.bank_account.manager]
+      tags:
+        - { name: homefinance.importer, alias: asnbankcsv }

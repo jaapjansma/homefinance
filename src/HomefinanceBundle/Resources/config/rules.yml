@@ -1,0 +1,47 @@
+parameters:
+  homefinance.rules.factory.class_name: HomefinanceBundle\Rules\Factory
+  homefinace.rules.engine.class_name: HomefinanceBundle\Rules\Engine
+  homefinace.rules.form.condition.class_name: HomefinanceBundle\Rules\Form\ConditionForm
+  homefinace.rules.form.action.class_name: HomefinanceBundle\Rules\Form\ActionForm
+
+services:
+  homefinance.rules.factory:
+    class: %homefinance.rules.factory.class_name%
+  homefinance.rules.engine:
+    class: %homefinace.rules.engine.class_name%
+    arguments: [@homefinance.rules.factory, @doctrine.orm.default_entity_manager]
+  homefinance.rules.form.condition:
+      class: %homefinace.rules.form.condition.class_name%
+      arguments: [@homefinance.rules.factory]
+      tags:
+      - { name: form.type, alias: rules_condition }
+  homefinance.rules.form.action:
+      class: %homefinace.rules.form.action.class_name%
+      arguments: [@homefinance.rules.factory]
+      tags:
+      - { name: form.type, alias: rules_action }
+  homefinace.rules.conditions.check_iban:
+    class: HomefinanceBundle\Rules\Conditions\CheckIban
+    arguments: [@translator]
+    tags:
+      - { name: rules.conditions, alias: check_iban }
+  homefinace.rules.conditions.check_name:
+      class: HomefinanceBundle\Rules\Conditions\CheckName
+      arguments: [@translator]
+      tags:
+        - { name: rules.conditions, alias: check_name }
+  homefinace.rules.actions.set_category:
+      class: HomefinanceBundle\Rules\Actions\SetCategory
+      arguments: [@doctrine.orm.default_entity_manager, @translator, @homefinance.category.manager]
+      tags:
+        - { name: rules.actions, alias: set_category }
+  homefinace.rules.actions.add_tag:
+        class: HomefinanceBundle\Rules\Actions\AddTag
+        arguments: [@doctrine.orm.default_entity_manager, @translator, @homefinance.tag.manager]
+        tags:
+          - { name: rules.actions, alias: add_tag }
+  homefinace.rules.actions.set_processed:
+      class: HomefinanceBundle\Rules\Actions\SetProcessed
+      arguments: [@translator]
+      tags:
+        - { name: rules.actions, alias: set_processed }

@@ -1,0 +1,48 @@
+profile_menu:
+  edit_profile: Bewerk je profiel
+  change_password: Wijzig wachtwoord
+  manage_administrations: Je administraties
+
+action_menu:
+  bank_accounts: Bankrekeningen
+  categories: Categoriën
+  tags: Tags
+  unprocessed: Nog te verwerken transacties
+  rules: Automatische verwerking
+  import: Importeer transacties
+  by_category: Overzicht per categorie
+  by_tag: Overzicht per tag
+  all_transactions: Alle transacties
+
+user.profile.updated: Je profiel is bijgewerkt
+user.profile.email_cofirmation_waiting: Je moet je e-mail adres nog bevestigen
+change_password.updated: Je wachtwoord is gewijzigd
+administration.updated: Administratie is bijgewerkt
+administration.deleted: Administratie is verwijderd
+administration.share.added: Administratie gedeeld
+administration.share.revoked: Delen van administratie ongedaan gemaakt
+category.added: Categorie toegevoegd
+category.edited: Categorie bijgewerkt
+category.removed: Categorie verwijderd
+category.moved-down: Categorie succesvol omlaag verplaatst
+category.moved-up: Categorie succesvol omhoog verplaatst
+bank_account.added: Bankrekening is toegevoegd
+bank_account.edited: Bankrekening is gewijzigd
+bank_account.removed: Bankrekening is verwijderd
+tag.added: Tag is toegevoegd
+tag.edited: Tag is gewijzigd
+tag.removed: Tag is verwijderd
+transaction.updated: Transactie bijgewerkt
+transaction.added: Transactie toegevoged
+transaction.import.success: Importeren voltooid.
+transaction.import.count: Er zijn %count% transacties geimporteerd.
+transaction.import.skipped: Er zijn %skipped% transacties overgelsagen
+
+rule.added: Regel toegevoegd
+condition.edited: Conditie opgeslagen
+action.edited: Actie opgeslagen
+rule.deleted: Regel verwijderd
+condition.deleted: Conditie verwijderd
+action.deleted: Actie verwijderd
+
+administration.none_found: Geen administraties gevonden

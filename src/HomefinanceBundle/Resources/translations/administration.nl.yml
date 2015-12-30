@@ -1,0 +1,128 @@
+manager.title: Beheer je administraties
+administration.shares.title: Deel administratie
+administration.share.user: Gebruiker
+administration.share.access: Toegangsrechten
+administration.name: Administratie
+administration.owner: Eigenaar
+administration.access: Toegangsrechten
+administration.edit: Instellingen
+administration.share: Delen
+administration.edit.title: Administratie instellingen
+administration.name.label: Administratie naam
+administration.update.btn-label: Bijwerken
+administration.updated: Je administratie is bijgewerkt
+administration.add: Administratie toevoegen
+administration.delete_confirm: Weet je zeker dat je deze administratie wilt verwijderen?
+administration.delete: Verwijderen
+
+Owner: Eigenaar
+Full access: Volledige toegang
+Edit: Toegang om gegevens in te voeren
+View: Alleen inzage
+No Access: Geen toegang
+
+category.add: Voeg categorie toe
+category.title: Categorie
+manage_categories.title: Categoriën
+category.edit: Bewerken
+category.add.title: Categorie toevoegen
+category.title.label: Titel
+category.parent.label: Bovenliggende
+category.update.btn-label: Opslaan
+category.type: Type
+category.type.label: Category type
+category.income: Inkomsten
+category.expense: Uitgaven
+category.suspense: Tussenrekening
+category.root: Top
+category.edit.title: Categorie bewerken
+category.delete: Verwijderen
+category.delete_confirm: Weet je zeker dat je deze categorie wilt verwijderen?
+
+manage_bank_accounts.title: Bankrekeningen
+bank_account.iban: IBAN
+bank_account.name: Naam
+bank_account.starting_balance: Beginsaldo
+bank_account.add: Bankrekening toevoegen
+bank_account.add.title: Bankrekening toevoegen
+bank_account.name.label: Omschrijving of naam
+bank_account.iban.label: IBAN
+bank_account.starting_balance.label: Beginsaldo
+bank_account.update.btn-label: Opslaan
+bank_account.edit: Bewerken
+bank_account.edit.title: Bewerk bankrekening
+bank_account.delete: Verwijderen
+bank_account.delete_confirm: Weet je zeker dat je deze bankrekening wilt verwijderen?
+
+manage_tags.title: Tags
+tag.name: Tag
+tag.add: Tag toevoegen
+tag.add.title: Tag toevoegen
+tag.name.label: Tag
+tag.update.btn-label: Opslaan
+tag.edit: Bewerken
+tag.edit.title: Bewerk tag
+tag.delete: Verwijderen
+tag.delete_confirm: Weet je zeker dat je deze tag wilt verwijderen?
+
+transaction.add.title: Transactie
+transaction.state.is_processed: Verwerkt
+transaction.state.unprocessed: Nog te verwerken
+transaction.date.label: Datum
+transaction.amount.label: Bedrag
+transaction.bank_account.label: Bankrekening
+transaction.name.label: T.n.v.
+transaction.name.help_text: Tegenrekening is ten name van
+transaction.iban.label: IBAN
+transaction.iban.help_text: IBAN tegenrekening
+transaction.description.label: Omschrijving
+transaction.category.label: Categorie
+transaction.category.empty: -- Selecteer categorie --
+transaction.update.btn-label: Opslaan
+transaction.save_process_next.btn-label: Verwerk & Volgende
+transactions.list.unprocessed.title: Nog te verwerken transacties
+transactions.list.all.title: Alle transacties
+transaction.date: Datum
+transaction.category: Categorie
+transaction.bank_account: Bank rekening
+transaction.name: Naam
+transaction.amount: Bedrag
+transaction.edit: Bewerken
+transaction.iban.group: Tegenrekening
+transaction.tags.group: Tags
+
+transaction.import.title: Importeren
+transaction.import.bank_account.label: Voor bankrekening
+transaction.import.importer: Importbestandsformaat
+transaction.import.file: Bestand
+transaction.import.btn-label: Importeren
+
+importers.rabobankcsv: Rabobank CSV (per rekening)
+importers.asnbankcsv: ASN Bank CSV (met IBAN)
+
+share.add: Delen met
+share.add.title: Delen met
+share.email.label: E-mailadres
+share.access.label: Toegangsrechten
+share.update.btn-label: Opslaan
+share.revoke: Trek machtiging in
+
+transactions.by_tag.title: Overzicht per tag
+transactions.by_tag.total: Totaal
+
+transactions.by_category.title: Overzicht per categorie
+transactions.no_category: Ongecatgoriseerd
+transactions.by_category.total: Totaal
+
+months.january: januari
+months.february: februari
+months.march: maart
+months.april: april
+months.may: mei
+months.june: juni
+months.july: juli
+months.august: augustus
+months.september: september
+months.october: october
+months.november: november
+months.december: december

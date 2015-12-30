@@ -1,0 +1,21 @@
+parameters:
+    homefinance.user.validator.unique_email.class_name: HomefinanceBundle\User\Validator\Constraints\UniqueEmailAddressValidator
+    homefinance.user.validator.email_exists.class_name: HomefinanceBundle\User\Validator\Constraints\EmailExistsValidator
+    homefinance.user.validator.valid_confirmation_token.class_name: HomefinanceBundle\User\Validator\Constraints\ConfirmationTokenValidator
+
+services:
+    homefinance.user.validator.unique_email:
+        class: %homefinance.user.validator.unique_email.class_name%
+        arguments: [@doctrine.orm.default_entity_manager, @security.token_storage]
+        tags:
+        - { name: validator.constraint_validator, alias: unique_email }
+    homefinance.user.validator.emailexists:
+        class: %homefinance.user.validator.email_exists.class_name%
+        arguments: [@doctrine.orm.default_entity_manager]
+        tags:
+        - { name: validator.constraint_validator, alias: email_exists }
+    homefinance.user.validator.valid_confirmation_token:
+            class: %homefinance.user.validator.valid_confirmation_token.class_name%
+            arguments: [@doctrine.orm.default_entity_manager]
+            tags:
+            - { name: validator.constraint_validator, alias: valid_confirmation_token }

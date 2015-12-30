@@ -1,0 +1,24 @@
+{% extends 'HomefinanceBundle:mailer:base.txt.twig' %}
+{% trans_default_domain "mailer" %}
+
+{% block subject %}
+{{ 'confirm_new_email.email.subject'|trans({'%username%': user.username, '%confirmationUrl%': confirmationUrl}) }}{{ parent() }}
+{% endblock %}
+
+{% block content_text_body %}
+{{ 'confirm_new_email.email.message'|trans({
+    '%name%': user.name,
+    '%fullConfirmationUrl%': confirmationUrl,
+    '%confirmationUrl%': plainUrl,
+    '%token%': user.confirmationToken
+}) }}
+{% endblock %}
+
+{% block content_html_body %}
+{{ 'confirm_new_email.email.html_message'|trans({
+    '%name%': user.name,
+    '%fullConfirmationUrl%': confirmationUrl,
+    '%confirmationUrl%': plainUrl,
+    '%token%': user.confirmationToken
+})|raw|nl2br }}
+{% endblock %}

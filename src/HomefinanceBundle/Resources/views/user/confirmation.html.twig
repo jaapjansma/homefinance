@@ -1,0 +1,15 @@
+{% extends 'HomefinanceBundle:layout:small_form.html.twig' %}
+
+{% trans_default_domain "user" %}
+
+{% block title %}
+    {{ 'confirmation.title'|trans }}
+{% endblock %}
+
+{% block content %}
+    {{ form_start(form) }}
+    <legend><h2>{{ 'confirmation.title'|trans }}</h2></legend>
+    {{ form_errors(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}

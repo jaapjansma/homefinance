@@ -1,0 +1,82 @@
+administration_shared:
+    email:
+        subject: Je hebt toegang tot de administratie van %by%
+        message: |
+            Beste %name%,
+
+            Gebruiker %by% heeft je toegang gegeven tot de administratie %administration%
+
+        html_message: |
+                  Beste %name%,
+
+                  Gebruiker %by% heeft je toegang gegeven tot de administratie %administration%
+
+confirmation:
+    email:
+        subject: Bevestig je e-mailadres
+        message: |
+            Beste %name%,
+
+            Je moet je e-mailadres nog bevestigen voordat je huishoudboekje kunt gaan bijhouden.
+
+            Klik op %fullConfirmationUrl% om je e-mailadres te bevestigen
+
+            Werkt bovenstaande niet?
+            Ga dan naar %confirmationUrl%
+            en vul onderstaande token in:
+            %token%
+
+        html_message: |
+                    Beste %name%,
+
+                    Je moet je e-mailadres nog bevestigen voordat je huishoudboekje kunt gaan bijhouden.
+
+                    Klik op <a href="%fullConfirmationUrl%">%confirmationUrl%</a> om je e-mailadres te bevestigen.
+
+                    Werkt bovenstaande niet?
+                    Ga dan naar <a href="%confirmationUrl%">%confirmationUrl%</a>
+                    en vul onderstaande token in:
+                    %token%
+confirm_new_email:
+    email:
+        subject: Bevestig je gewijzigde e-mailadres
+        message: |
+            Beste %name%,
+
+            Je moet je nieuwe e-mailadres nog bevestigen voordat je huishoudboekje kunt gaan bijhouden.
+
+            Klik op %fullConfirmationUrl% om je e-mailadres te bevestigen
+
+            Werkt bovenstaande niet?
+            Ga dan naar %confirmationUrl%
+            en vul onderstaande token in:
+            %token%
+
+        html_message: |
+                    Beste %name%,
+
+                    Je moet je nieuwe e-mailadres nog bevestigen voordat je huishoudboekje kunt gaan bijhouden.
+
+                    Klik op <a href="%fullConfirmationUrl%">%confirmationUrl%</a> om je e-mailadres te bevestigen.
+
+                    Werkt bovenstaande niet?
+                    Ga dan naar <a href="%confirmationUrl%">%confirmationUrl%</a>
+                    en vul onderstaande token in:
+                    %token%
+
+new_account_confirmation:
+    email:
+        subject: Nieuw account
+        message: |
+            Beste %name%,
+
+            Je moet je nieuwe e-mailadres nog bevestigen voordat je huishoudboekje kunt gaan bijhouden.
+
+            Klik op %fullConfirmationUrl% om je e-mailadres te bevestigen en een wachtwoord in te stellen
+
+        html_message: |
+                    Beste %name%,
+
+                    Je moet je nieuwe e-mailadres nog bevestigen voordat je huishoudboekje kunt gaan bijhouden.
+
+                    Klik op <a href="%fullConfirmationUrl%">%fullConfirmationUrl%</a> om je e-mailadres te bevestigen en een wachtwoord in te stellen.

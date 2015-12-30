@@ -1,0 +1,27 @@
+{% extends 'HomefinanceBundle:layout:base.html.twig' %}
+
+{% trans_default_domain "homefinance" %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4 col-lg-offset-4">
+                <div class="panel no-bottom-rounded-corners no-margin-bottom margin-top" id="branding">
+                    <div class="panel-body text-center">
+                        <img src="{{ asset('bundles/homefinance/images/logo.png') }}" alt="{{ 'homefinance.app.title'|trans }}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-lg-offset-4">
+                <div class="panel no-top-rounded-corners">
+                    <div class="panel-body">
+
+                        {% block content %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

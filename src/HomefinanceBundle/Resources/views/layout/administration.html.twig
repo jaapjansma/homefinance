@@ -1,0 +1,35 @@
+{% extends 'HomefinanceBundle:layout:full_form.html.twig' %}
+
+{% block sidebar %}
+        <ul class="nav-pills nav-stacked nav action-menu">
+            <li class="{% if (app.request.get('_route') == 'transactions_by_category') %} active {% endif %}">
+                <a href="{{ url('transactions_by_category') }}">
+                    {{ 'action_menu.by_category'|trans }}
+                </a>
+            </li>
+            <li class="{% if (app.request.get('_route') == 'transactions_by_tag') %} active {% endif %}">
+                <a href="{{ url('transactions_by_tag') }}">
+                    {{ 'action_menu.by_tag'|trans }}
+                </a>
+            </li>
+        </ul>
+
+    <ul class="nav-pills nav-stacked nav action-menu">
+        <li class="{% if (app.request.get('_route') == 'list_unprocessed_transactions') %} active {% endif %}">
+            <a href="{{ url('list_unprocessed_transactions') }}" >
+                {{ 'action_menu.unprocessed'|trans }}
+                {% if (count_unprocessed_transactions(app.user) > 0) %}
+                    <span class="badge">{{ count_unprocessed_transactions(app.user) }}</span>
+                {% endif %}
+            </a>
+        </li>
+        <li class="{% if (app.request.get('_route') == 'transaction_import') %} active {% endif %}">
+            <a href="{{ url('transaction_import') }}">
+                {{ 'action_menu.import'|trans }}
+                <i class="glyphicon glyphicon-import"></i>
+            </a>
+        </li>
+    </ul>
+
+    {{ knp_menu_render('action', { 'style': 'stacked-pills' }) }}
+{% endblock %}

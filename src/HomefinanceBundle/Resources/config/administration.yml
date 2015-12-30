@@ -1,0 +1,69 @@
+parameters:
+  homefinance.administration.manager.class_name: HomefinanceBundle\Administration\Manager\AdministrationManager
+  homefinance.bank_account.manager.class_name: HomefinanceBundle\Administration\Manager\BankAccountManager
+  homefinance.tag.manager.class_name: HomefinanceBundle\Administration\Manager\TagManager
+  homefinance.transaction.manager.class_name: HomefinanceBundle\Administration\Manager\TransactionManager
+  homefinance.category.manager.class_name: HomefinanceBundle\Administration\Manager\CategoryManager
+  homefinance.administration.access_manager.class_name: HomefinanceBundle\Administration\Manager\AccessManager
+  homefinance.administration.form.edit.class_name: HomefinanceBundle\Administration\Form\AdministrationEdit
+  homefinance.share.form.edit.class_name: HomefinanceBundle\Administration\Form\Share
+  homefinance.administration.form.category.class_name: HomefinanceBundle\Administration\Form\Category
+  homefinance.administration.form.bank_account.class_name: HomefinanceBundle\Administration\Form\BankAccount
+  homefinance.administration.form.tag.class_name: HomefinanceBundle\Administration\Form\Tag
+  homefinance.administration.form.transaction.class_name: HomefinanceBundle\Administration\Form\Transaction
+  homefinance.administration.form.tags.class_name: HomefinanceBundle\Administration\Form\Type\TagType
+
+services:
+  homefinance.administration.manager:
+    class: %homefinance.administration.manager.class_name%
+    arguments: [@doctrine.orm.default_entity_manager]
+  homefinance.bank_account.manager:
+      class: %homefinance.bank_account.manager.class_name%
+      arguments: [@doctrine.orm.default_entity_manager]
+  homefinance.transaction.manager:
+        class: %homefinance.transaction.manager.class_name%
+        arguments: [@doctrine.orm.default_entity_manager]
+  homefinance.tag.manager:
+      class: %homefinance.tag.manager.class_name%
+      arguments: [@doctrine.orm.default_entity_manager, @homefinance.administration.manager, @security.token_storage]
+  homefinance.category.manager:
+        class: %homefinance.category.manager.class_name%
+        arguments: [@doctrine.orm.default_entity_manager, @homefinance.administration.manager, @security.token_storage]
+  homefinance.administration.access_manager:
+    class: %homefinance.administration.access_manager.class_name%
+    arguments: [@homefinance.administration.manager]
+  homefinance.share.form.edit:
+      class: %homefinance.share.form.edit.class_name%
+      tags:
+        - { name: form.type, alias: share_edit }
+  homefinance.administration.form.edit:
+    class: %homefinance.administration.form.edit.class_name%
+    tags:
+      - { name: form.type, alias: administration_edit }
+  homefinance.administration.form.category:
+    class: %homefinance.administration.form.category.class_name%
+    arguments: [@homefinance.category.manager]
+    tags:
+      - { name: form.type, alias: category }
+  homefinance.administration.form.bank_account:
+    class: %homefinance.administration.form.bank_account.class_name%
+    tags:
+      - { name: form.type, alias: bank_account }
+  homefinance.administration.form.tag:
+    class: %homefinance.administration.form.tag.class_name%
+    tags:
+      - { name: form.type, alias: tag }
+  homefinance.administration.form.transaction:
+      class: %homefinance.administration.form.transaction.class_name%
+      tags:
+        - { name: form.type, alias: transaction }
+  homefinance.administration.form.tags:
+        class: %homefinance.administration.form.tags.class_name%
+        arguments: [@homefinance.tag.manager]
+        tags:
+          - { name: form.type, alias: tags }
+  homefinance.no_administration_exception:
+      class: HomefinanceBundle\Administration\NoAdministrationListener
+      arguments: [@router, @session, @translator]
+      tags:
+          - { name: kernel.event_listener, event: kernel.exception }

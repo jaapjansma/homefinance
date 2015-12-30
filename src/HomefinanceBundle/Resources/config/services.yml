@@ -1,0 +1,24 @@
+imports:
+    - { resource: validators.yml }
+    - { resource: mailer.yml }
+    - { resource: user.yml }
+    - { resource: menu.yml }
+    - { resource: administration.yml}
+    - { resource: twig.yml}
+    - { resource: rules.yml}
+    - { resource: importer.yml}
+
+services:
+    homefinance.tokengenerator:
+        class: HomefinanceBundle\Util\TokenGenerator
+    homefinance.security.access.anonymous.voter:
+        class: HomefinanceBundle\Security\Authorization\Voter\AnonymousVoter
+        arguments: [@security.authentication.trust_resolver]
+        tags:
+            - { name: security.voter }
+    homefinance.security.access_denied_handler:
+            class: HomefinanceBundle\Security\AccessDeniedHandler
+            arguments: [@security.authorization_checker, @security.access_map, @router]
+    homefinance.date_utils:
+      class: HomefinanceBundle\Util\DateUtil
+      arguments: [@translator]

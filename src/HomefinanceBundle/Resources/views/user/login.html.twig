@@ -1,0 +1,36 @@
+{% extends 'HomefinanceBundle:layout:small_form.html.twig' %}
+
+{% trans_default_domain "user" %}
+
+{% block title %}
+    {{ 'login.title'|trans }}
+{% endblock %}
+
+{% block content %}
+<form class="form-basic" method='post' action='{{path('login_check')}}'>
+    <h2>{{ 'login.title'|trans }}</h2>
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'user') }}</div>
+    {% endif %}
+    <div class="form-group">
+        <input type="text" id="inputName" class="form-control" name='_username' placeholder="{{ 'login.email.placeholder'|trans }}" required autofocus value="{{ last_username }}">
+    </div>
+    <div class="form-group">
+        <input type="password" id="inputPassword" class="form-control" name="_password" placeholder="{{ 'login.password.placeholder'|trans }}" required>
+    </div>
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" checked name="_remember_me" id="remember_me">{{ 'login.remember-me'|trans }}
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary btn-lg" type="submit">{{ 'login.login-btn-label'|trans }}</button>
+        <a href="{{ url('lost_password') }}">{{  'lost_password.link_title'|trans }}</a>
+    </div>
+
+    <p>{{  'login.dont-have-an-account'|trans({'%registration_link%': path('registration')})|raw }}</p>
+
+</form>
+{% endblock %}

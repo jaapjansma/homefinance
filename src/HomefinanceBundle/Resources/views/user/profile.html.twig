@@ -1,0 +1,25 @@
+{% extends 'HomefinanceBundle:layout:account_settings.html.twig' %}
+
+{% trans_default_domain "user" %}
+
+{% block title %}
+    {{ 'profile.title'|trans }}
+{% endblock %}
+
+{% block form_title %}
+    {{ 'profile.title'|trans }}
+{% endblock %}
+
+{% block form %}
+    <div class="row">
+    <div class="col-md-2">
+        <a class="profile-picture-big" href="{{ url('change-avatar') }}">
+        <img src="{{ user.avatar|imagine_filter('big_profile_picture') }}" alt="{{ user.name }}" class="img-responsive" />
+        <i class="glyphicon glyphicon-pencil pull-right edit"></i>
+        </a>
+    </div>
+    <div class="col-md-4">
+        {{ parent() }}
+    </div>
+    </div>
+{% endblock %}

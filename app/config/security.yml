@@ -1,11 +1,12 @@
 # To get started with security, check out the documentation:
 # http://symfony.com/doc/current/book/security.html
 security:
+    encoders:
+        HomefinanceBundle\Entity\User: bcrypt
 
-    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory:
-            memory: ~
+        database_users:
+            entity: { class: HomefinanceBundle:User, property: email }
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -13,12 +14,31 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        main:
-            anonymous: ~
-            # activate different ways to authenticate
+        default:
+            pattern: ^/
+            anonymous: true
+            access_denied_handler: homefinance.security.access_denied_handler
+            form_login:
+                check_path: /login_check
+                login_path: /login
 
-            # http_basic: ~
-            # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
-
-            # form_login: ~
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+            logout:
+                path: /logout
+                target: /login
+            remember_me:
+                key:      "%secret%"
+                lifetime: 7257600 # 3 months in seconds
+                path:     /
+                remember_me_parameter: _remember_me #field to click for remember login
+                # by default, the feature is enabled by checking a
+                # checkbox in the login form (see below), uncomment the
+                # following line to always enable it.
+                #always_remember_me: true
+    access_control:
+        - { path: ^/login, roles: IS_ANONYMOUS }
+        - { path: ^/registration, roles: IS_ANONYMOUS }
+        - { path: ^/new-account-confirmation, roles: IS_ANONYMOUS }
+        - { path: ^/email-address-confirmation, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        - { path: ^/lost-password, roles: IS_ANONYMOUS}
+        - { path: ^/reset-password, roles: IS_ANONYMOUS}
+        - { path: ^/, roles: IS_AUTHENTICATED_REMEMBERED }

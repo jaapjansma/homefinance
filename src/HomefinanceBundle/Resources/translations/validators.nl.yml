@@ -1,0 +1,5 @@
+user.password.invalid-message: De wachtwoorden komen niet overeen
+user.agree.required: Je dient akkoord te gaan met de algemene voorwaarden
+The token does not exist or is expired: De token is ongeldig
+The e-mail address %e-mail% doesn't exist: Het e-mailadres %e-mail% is niet bekend bij ons
+The e-mail address '%e-mail% is not unique: Het e-mailadres '%e-mail%' bestaat al

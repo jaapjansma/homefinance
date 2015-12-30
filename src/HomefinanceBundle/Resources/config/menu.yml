@@ -1,0 +1,18 @@
+services:
+    homefinance.menu_builder:
+        class: HomefinanceBundle\Menu\MenuBuilder
+        arguments: ["@knp_menu.factory", "@translator"]
+
+    homefinance.action_menu:
+        class: Knp\Menu\MenuItem # the service definition requires setting the class
+        factory: ["@homefinance.menu_builder", createActionMenu]
+        arguments: ["@request_stack"]
+        tags:
+            - { name: knp_menu.menu, alias: action }
+
+    homefinance.profile_menu:
+            class: Knp\Menu\MenuItem # the service definition requires setting the class
+            factory: ["@homefinance.menu_builder", createProfileMenu]
+            arguments: ["@request_stack"]
+            tags:
+                - { name: knp_menu.menu, alias: profile }

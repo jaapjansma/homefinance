@@ -1,0 +1,55 @@
+{% extends 'HomefinanceBundle:layout:account_settings.html.twig' %}
+
+{% trans_default_domain "administration" %}
+
+{% block title %}
+    {{ 'manager.title'|trans }}
+{% endblock %}
+
+{% block form_title %}
+    {{ 'manager.title'|trans }}
+{% endblock %}
+
+{% block form %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>{{ 'administration.name'|trans  }}</th>
+                <th>{{ 'administration.access'|trans  }}</th>
+                <th>{{ 'administration.owner'|trans  }}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for administration in administrations %}
+                <tr>
+                    <td>{{ administration.name }}</td>
+                    <td>{{ manager.determineAccess(administration, app.user)|trans }}</td>
+                    <td>{{ administration.owner.name }}</td>
+                    <td>
+                        {% if (has_access_to_administration(app.user, administration, 'Full access')) %}
+                            <a href="{{ url('share_administration', {'slug':administration.slug}) }}" class="btn btn-sm">
+                                <i class="glyphicon glyphicon-user"></i>
+                                {{ 'administration.share'|trans }}
+                            </a>
+                            <a href="{{ url('edit_administration', {'slug':administration.slug}) }}" class="btn btn-sm">
+                                <i class="glyphicon glyphicon-wrench"></i>
+                                {{ 'administration.edit'|trans }}
+                            </a>
+                            {% if (app.user == administration.owner) %}
+                                <a href="{{ url('delete_administration', {'slug':administration.slug}) }}" class="btn btn-sm btn-danger" onclick="return confirm('{{ 'administration.delete_confirm'|trans }}');">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                    {{ 'administration.delete'|trans }}
+                                </a>
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-success" href="{{ url('new_administration') }}" role="button"><i class="glyphicon glyphicon-plus"></i> {{ 'administration.add'|trans() }}</a>
+
+
+{% endblock %}

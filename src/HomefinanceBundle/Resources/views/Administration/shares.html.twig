@@ -1,0 +1,49 @@
+{% extends 'HomefinanceBundle:layout:account_settings.html.twig' %}
+
+{% trans_default_domain "administration" %}
+
+{% block title %}
+    {{ 'administration.shares.title'|trans }}
+{% endblock %}
+
+{% block form_title %}
+    {{ 'administration.shares.title'|trans }}
+{% endblock %}
+
+{% block form %}
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>{{ 'administration.share.user'|trans  }}</th>
+                <th>{{ 'administration.share.access'|trans  }}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for share in administration.shares %}
+                <tr>
+                    <td>
+                        <img src="{{ share.user.avatar|imagine_filter('small_profile_picture') }}" alt="{{ share.user.name }}" class="img-circle" />
+                        &nbsp;
+                        {{ share.user.name }}
+                    </td>
+                    <td>{{ manager.determineAccess(share.administration, share.user)|trans }}</td>
+                    <td>
+                        {% if (has_access_to_administration(app.user, administration, 'Full access') and app.user != share.user) %}
+                            <a class="btn btn-danger btn-sm" href="{{ url('share_administration_revoke', {
+                                'slug': administration.slug,
+                                'id': share.id
+                            }) }}">
+                                <i class="glyphicon glyphicon-trash"></i>&nbsp; {{ 'share.revoke'|trans }}
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if (has_access_to_administration(app.user, administration, 'Full access')) %}
+        <a class="btn btn-success" href="{{ url('share_administration_add', {'slug': administration.slug}) }}" role="button"><i class="glyphicon glyphicon-plus"></i> {{ 'share.add'|trans() }}</a>
+    {% endif %}
+{% endblock %}

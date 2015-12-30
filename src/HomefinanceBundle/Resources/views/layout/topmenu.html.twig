@@ -1,0 +1,47 @@
+{% trans_default_domain "homefinance" %}
+<nav class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">{{ 'homefinance.toggle_navigation'|trans }}</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="{{ url('dashboard') }}">{{ 'homefinance.app.title'|trans }}</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+        {% if (app.user) %}
+            <ul class="navbar-nav navbar-right nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle avatar" data-toggle="dropdown">
+                        <img src="{{ app.user.avatar|imagine_filter('small_profile_picture') }}" alt="{{ app.user.name }}" class="img-circle" />
+                        {{ app.user.name }}
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="menu_level_1 dropdown-menu">
+                        {{ knp_menu_render('profile') }}
+                    </ul>
+                </li>
+            </ul>
+        {% endif %}
+
+        {% if (list_administrations(app.user)|length > 1) %}
+        <ul class="navbar-nav navbar-right nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    {{ current_administration(app.user).name }}
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu nav">
+                    {% for administration in list_administrations(app.user) %}
+                        <li><a href="{{ url('switch_administration', {'slug': administration.slug}) }}">{{ administration.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+        </ul>
+        {% endif %}
+    </div><!-- /.navbar-collapse -->
+
+</nav>

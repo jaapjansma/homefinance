@@ -1,0 +1,52 @@
+{% extends 'HomefinanceBundle:layout:small_form.html.twig' %}
+
+{% trans_default_domain "user" %}
+
+{% block title %}
+    {{ 'registration.create-an-account.title'|trans }}
+{% endblock %}
+
+{% block content %}
+    {{ form_start(form) }}
+    <legend><h2>{{ 'registration.create-an-account.title'|trans }}</h2></legend>
+    {{ form_errors(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+    <p>
+        {{ 'registration.create-an-account.already-have-an-account'|trans({'%login_link%': path('login')})|raw }}
+    </p>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+<script type="text/javascript">
+    var custom_administration_name = false;
+    var current_administration_name = '';
+
+    $(function() {
+        $('#registration_name').change(copyName);
+        $('#registration_name').keyup(copyName);
+
+        $('#registration_administration_name').change(checkCustom);
+        $('#registration_administration_name').keyup(checkCustom);
+    });
+
+
+    function copyName() {
+        if (custom_administration_name) {
+            return;
+        }
+        $('#registration_administration_name').val($('#registration_name').val());
+        current_administration_name = $('#registration_administration_name').val();
+    }
+
+    function checkCustom() {
+        if (current_administration_name != $('#registration_administration_name').val()) {
+            custom_administration_name = true;
+        } else {
+            custom_administration_name = false;
+        }
+    }
+
+</script>
+{% endblock %}

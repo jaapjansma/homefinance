@@ -1,0 +1,53 @@
+{% extends 'HomefinanceBundle:layout:account_settings.html.twig' %}
+
+{% trans_default_domain "user" %}
+
+{% block title %}
+    {{ 'change-avatar.title'|trans }}
+{% endblock %}
+
+{% block form_title %}
+    {{ 'change-avatar.title'|trans }}
+{% endblock %}
+
+{% block form %}
+    {{ form_start(form) }}
+    <div class="row">
+    <div class="col-md-2">
+        <div class="profile-picture-big">
+        <img id="avatar_preview" src="{{ user.avatar|imagine_filter('big_profile_picture') }}" alt="{{ user.name }}" class="img-responsive" />
+        {{ form_widget(form.remove) }}
+        </div>
+    </div>
+    <div class="col-md-4">
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+<script type="text/javascript">
+    $(function() {
+        $("#form_avatar").change(function(){
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#avatar_preview').attr('src', e.target.result);
+                    $('#avatar_preview').addClass('preview');
+                    $('#form_remove').removeClass('hidden');
+                }
+
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        $('#form_remove').click(function() {
+            $('#avatar_preview').attr('src', '{{ user.defaultAvatar|imagine_filter('big_profile_picture') }}');
+            $('#form_avatar').files = new Array();
+            $('#form_remove').addClass('hidden');
+        });
+    });
+</script>
+{% endblock %}

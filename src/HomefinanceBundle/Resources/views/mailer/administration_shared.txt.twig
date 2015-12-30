@@ -1,0 +1,22 @@
+{% extends 'HomefinanceBundle:mailer:base.txt.twig' %}
+{% trans_default_domain "mailer" %}
+
+{% block subject %}
+{{ 'administration_shared.email.subject'|trans({'%by%': by.name}) }}{{ parent() }}
+{% endblock %}
+
+{% block content_text_body %}
+{{ 'administration_shared.email.message'|trans({
+    '%by%': by.name,
+    '%administration%': share.administration.name,
+    '%name%': share.user.name
+}) }}
+{% endblock %}
+
+{% block content_html_body %}
+{{ 'administration_shared.email.html_message'|trans({
+    '%by%': by.name,
+    '%administration%': share.administration.name,
+    '%name%': share.user.name
+})|raw|nl2br }}
+{% endblock %}

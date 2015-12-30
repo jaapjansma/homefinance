@@ -1,0 +1,13 @@
+parameters:
+    homefinance.mailer.class_name: HomefinanceBundle\Mailer\TwigMailer
+
+services:
+  homefinance.mailer:
+        class: %homefinance.mailer.class_name%
+        arguments:
+            - @mailer
+            - @twig
+            - @router
+            - from_email:
+                    address: %homefinance.from_email.address%
+                    sender_name: %homefinance.from_email.sender_name%

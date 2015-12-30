@@ -1,0 +1,82 @@
+{% extends 'HomefinanceBundle:layout:administration.html.twig' %}
+
+{% trans_default_domain "rules" %}
+
+{% block title %}
+    {{ 'manage_rules.title'|trans }}
+{% endblock %}
+
+{% block form_title %}
+    {{ 'manage_rules.title'|trans }}
+{% endblock %}
+
+{% block form %}
+
+    {% for rule in rules %}
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    {{ 'rule'|trans() }}
+                    <span class="pull-right">
+                    {% if (has_access_to_administration(app.user, administration, 'Edit')) %}
+                        <a class="btn btn-danger btn-xs" role="button" href="{{ url('delete_rule', {'rule_id': rule.id}) }}" title="{{ 'rule.delete'|trans() }}" onclick="return confirm('{{ 'rule.delete_confirm'|trans }}');"><i class="glyphicon glyphicon-trash"></i></a>
+                    {% endif %}
+                </div>
+                <div class="panel-body">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">{{ 'rule.conditions'|trans() }}</div>
+                        <div class="panel-body">
+                            {% for condition in rule.conditions %}
+                                <p>{{ factory.getConditionLabel(condition) }}
+                                <span class="pull-right">
+                                {% if (has_access_to_administration(app.user, administration, 'Edit')) %}
+                                    {% if (factory.hasConditionForm(condition)) %}
+                                    <a class="btn btn-default btn-xs" role="button" href="{{ url('edit_condition', {'rule_id': rule.id, 'condition_id': condition.id}) }}" title="{{ 'rule.condition.edit'|trans() }}"><i class="glyphicon glyphicon-pencil"></i></a>
+                                    {% endif %}
+                                    <a class="btn btn-danger btn-xs" role="button" href="{{ url('delete_condition', {'rule_id': rule.id, 'condition_id': condition.id}) }}" title="{{ 'rule.condition.delete'|trans() }}" onclick="return confirm('{{ 'rule.condition.delete_confirm'|trans }}');"><i class="glyphicon glyphicon-trash"></i></a>
+                                {% endif %}
+                                </span>
+                                </p>
+                            {% endfor %}
+                            {% if (has_access_to_administration(app.user, administration, 'Edit')) %}
+                                <a class="btn btn-success btn-xs" role="button" href="{{ url('add_condition', {rule_id: rule.id}) }}">
+                                    <i class="glyphicon glyphicon-plus"></i> {{ 'rule.add_condition'|trans() }}
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">{{ 'rule.actions'|trans() }}</div>
+                        <div class="panel-body">
+                            {% for rule_action in rule.actions %}
+                                <p>{{ factory.getActionLabel(rule_action) }}
+                                <span class="pull-right">
+                                {% if (has_access_to_administration(app.user, administration, 'Edit')) %}
+                                    {% if (factory.hasActionForm(rule_action)) %}
+                                    <a class="btn btn-default btn-xs" role="button" href="{{ url('edit_action', {'rule_id': rule.id, 'action_id': rule_action.id}) }}" title="{{ 'rule.action.edit'|trans() }}"><i class="glyphicon glyphicon-pencil"></i></a>
+                                    {%  endif %}
+                                    <a class="btn btn-danger btn-xs" role="button" href="{{ url('delete_action', {'rule_id': rule.id, 'action_id': rule_action.id}) }}" title="{{ 'rule.action.delete'|trans() }}" onclick="return confirm('{{ 'rule.action.delete_confirm'|trans }}');"><i class="glyphicon glyphicon-trash"></i></a>
+                                {% endif %}
+                                </span>
+                                </p>
+                            {% endfor %}
+
+                            {% if (has_access_to_administration(app.user, administration, 'Edit')) %}
+                                <a class="btn btn-success btn-xs" role="button" href="{{ url('add_action', {rule_id: rule.id}) }}">
+                                    <i class="glyphicon glyphicon-plus"></i> {{ 'rule.add_action'|trans() }}
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="clearfix"></div>
+
+    {% if (has_access_to_administration(app.user, administration, 'Edit')) %}
+        <a class="btn btn-success" href="{{ url('add_rule') }}" role="button"><i class="glyphicon glyphicon-plus"></i> {{ 'rule.add'|trans() }}</a>
+    {% endif %}
+{% endblock %}

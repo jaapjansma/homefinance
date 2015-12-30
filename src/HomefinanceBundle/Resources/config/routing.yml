@@ -1,0 +1,33 @@
+login_check:
+    path: /login_check
+
+logout:
+    path: /logout
+
+homefinance_user_annotation:
+    resource: "@HomefinanceBundle/User/Controller/"
+    type:     annotation
+
+homefinance_annotation:
+    resource: "@HomefinanceBundle/Controller/"
+    type:     annotation
+
+homefinance_manager_annotation:
+    resource: "@HomefinanceBundle/Administration/Controller/ManageController.php"
+    type:     annotation
+    prefix:   /manage
+
+homefinance_administration_annotation:
+    resource: "@HomefinanceBundle/Administration/Controller/AdministrationController.php"
+    type:     annotation
+    prefix:   /administration
+
+homefinance_transaction_annotation:
+    resource: "@HomefinanceBundle/Administration/Controller/TransactionController.php"
+    type:     annotation
+    prefix:   /transaction
+
+homefinance_rules_annotation:
+    resource: "@HomefinanceBundle/Rules/Controller/"
+    type:     annotation
+    prefix:   /rules

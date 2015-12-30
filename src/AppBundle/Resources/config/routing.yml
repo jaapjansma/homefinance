@@ -1,0 +1,2 @@
+homefinance:
+    resource: "@HomefinanceBundle/Resources/config/routing.yml"

@@ -1,0 +1,132 @@
+{% extends 'HomefinanceBundle:layout:administration.html.twig' %}
+
+{% trans_default_domain "administration" %}
+
+{% block title %}
+    {{ 'transaction.add.title'|trans }}
+{% endblock %}
+
+{% block form_title %}
+    {{ 'transaction.add.title'|trans }}
+{% endblock %}
+
+{% block form %}
+    {{ form_start(form, {
+        'style': 'vertical'
+    }) }}
+    {{ form_errors(form) }}
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-6">
+                    {{ form_row(form.amount) }}
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        {{ form_label(form.date) }}
+                        <div class="input-group date">
+                            {{ form_widget(form.date) }}
+                            <div class="input-group-addon">
+                                <span class="glyphicon glyphicon-th" onclick="$(this).parent().parent().children('.datepicker').datepicker('show');"></span>
+                            </div>
+                            {{ form_errors(form.date) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    {{ form_row(form.bank_account) }}
+                    {{ form_row(form.category) }}
+                    {{ form_row(form.description) }}
+                    <h4>
+                        {% if (transaction.isProcessed()) %}
+                            <span class="label label-success">{{ 'transaction.state.is_processed'|trans() }}</span>
+                        {% else %}
+                            <span class="label label-warning">{{ 'transaction.state.unprocessed'|trans() }}</span>
+                        {% endif %}
+                    </h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ 'transaction.iban.group'|trans() }}</div>
+                <div class="panel-body">
+                    {{ form_row(form.name) }}
+                    {{ form_row(form.iban) }}
+                </div>
+            </div>
+
+            <div class="panel panel-info">
+                <div class="panel-heading">{{ 'transaction.tags.group'|trans() }}</div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        {{ form_label(form.tags) }}
+                        <div class="input-group">
+                            {{ form_widget(form.tags) }}
+                        </div>
+                        {{ form_errors(form.tags) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+
+        <div class="btn-group" role="group" aria-label="actions">
+            {{  form_widget(form.save) }}
+            {% if (form.offsetExists('save_process_next')) %}
+            {{ form_widget(form.save_process_next) }}
+            {% endif %}
+        </div>
+    </div>
+
+
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        var tag_list = new Bloodhound({
+            local: [
+                {% for tag in tags %}
+                '{{ tag.name }}'{% if not loop.last %},{% endif %}
+                {% endfor %}
+            ],
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            datumTokenizer: Bloodhound.tokenizers.whitespace
+        });
+        tag_list.initialize();
+
+        var typeahead_config = new Array(
+         {
+            hint: true,
+            highlight: true,
+        },
+        {
+            source: tag_list.ttAdapter()
+        });
+
+        $('#transaction_tags').tagsinput({
+            typeaheadjs: new Array(
+            {
+                hint: true,
+                highlight: true,
+            },
+            {
+                source: tag_list.ttAdapter()
+            }),
+        });
+    </script>
+{% endblock %}
