@@ -33,4 +33,17 @@ class BankAccountManager
         ));
         return $bankAccount;
     }
+
+    public function getSaldo(BankAccount $bankAccount) {
+        $repo = $this->entityManager->getRepository('HomefinanceBundle:Transaction');
+        $transactions = $repo->findBy(array(
+            'administration' => $bankAccount->getAdministration(),
+            'bank_account' => $bankAccount,
+        ));
+        $total = (float) $bankAccount->getStartingBalance();
+        foreach($transactions as $t) {
+            $total = $total + $t->getAmount();
+        }
+        return $total;
+    }
 }

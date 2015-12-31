@@ -17,6 +17,7 @@
                 <th>{{ 'bank_account.iban'|trans  }}</th>
                 <th>{{ 'bank_account.name'|trans }}</th>
                 <th>{{ 'bank_account.starting_balance'|trans }}</th>
+                <th>{{ 'bank_account.balance'|trans }}</th>
                 <th></th>
             </tr>
         </thead>
@@ -28,6 +29,7 @@
                     </td>
                     <td>{{ account.name }}</td>
                     <td>&euro; {{ account.startingBalance|number_format(2, ',', '.') }}</td>
+                    <td>&euro; {{ bank_account_manager.getSaldo(account)|number_format(2, ',', '.') }}</td>
                     <td class="text-right">
                         {% if (has_access_to_administration(app.user, administration, 'Full access')) %}
                             <a href="{{ url('edit_bank_account', {'id': account.id}) }}" class="btn btn-xs btn-success">

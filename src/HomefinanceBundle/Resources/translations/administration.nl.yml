@@ -48,6 +48,7 @@ bank_account.add.title: Bankrekening toevoegen
 bank_account.name.label: Omschrijving of naam
 bank_account.iban.label: IBAN
 bank_account.starting_balance.label: Beginsaldo
+bank_account.balance: Huidig saldo
 bank_account.update.btn-label: Opslaan
 bank_account.edit: Bewerken
 bank_account.edit.title: Bewerk bankrekening

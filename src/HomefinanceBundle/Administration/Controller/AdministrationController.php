@@ -276,6 +276,8 @@ class AdministrationController extends DefaultController {
         $manager = $this->get('homefinance.administration.manager');
         $administration = $this->checkCurrentAdministration(Permission::EDIT);
 
+        $bankAccountManager = $this->get('homefinance.bankaccount.manager');
+
         $repo = $this->getDoctrine()->getRepository('HomefinanceBundle:BankAccount');
         $accounts = $repo->findByAdministration($administration);
 
@@ -283,6 +285,7 @@ class AdministrationController extends DefaultController {
             'administration' => $administration,
             'accounts' => $accounts,
             'manager' => $manager,
+            'bank_account_manager' => $bankAccountManager,
             'user' => $user,
         ));
     }
