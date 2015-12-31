@@ -3,6 +3,7 @@
 namespace HomefinanceBundle\Entity\Repository;
 
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
+use HomefinanceBundle\Category\Builder;
 use HomefinanceBundle\Category\Type;
 use HomefinanceBundle\Entity\Administration;
 use HomefinanceBundle\Entity\Category;
@@ -38,10 +39,8 @@ class CategoryRepository extends NestedTreeRepository
         }
 
         //root doesn't exist create one
-        $rootCategory = new Category();
-        $rootCategory->setAdministration($administration);
-        $rootCategory->setTitle('category.root');
-        $rootCategory->setType(Type::ROOT);
+        $builder = new Builder();
+        $rootCategory = $builder->createRootCategory($administration);
         $em = $this->getEntityManager();
         $em->persist($rootCategory);
         $em->flush();

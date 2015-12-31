@@ -3,6 +3,7 @@
 namespace HomefinanceBundle\User\Manager;
 
 use Doctrine\ORM\EntityNotFoundException;
+use HomefinanceBundle\Category\Preset;
 use HomefinanceBundle\Entity\Administration;
 use HomefinanceBundle\User\Event\ProfileEvent;
 use HomefinanceBundle\User\Model\ResetPassword;
@@ -47,11 +48,16 @@ class UserManager implements UserManagerInterface
 
         $user->setEnabled(false);
 
+        $categoryPreset = new Preset();
+        $rootCategory = $categoryPreset->createPreset($administration);
+
+
         $event = new RegistrationEvent($user, $registration);
         $this->dispatcher->dispatch(UserEvents::REGISTRATION_SUCCESS, $event);
 
         $this->entityManager->persist($user);
         $this->entityManager->persist($administration);
+        $this->entityManager->persist($rootCategory);
         $this->entityManager->flush();
     }
 

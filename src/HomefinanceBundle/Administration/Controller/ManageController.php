@@ -8,6 +8,8 @@ namespace HomefinanceBundle\Administration\Controller;
 
 use HomefinanceBundle\Administration\AdministrationEvents;
 use HomefinanceBundle\Administration\Event\ShareEvent;
+use HomefinanceBundle\Category\Builder;
+use HomefinanceBundle\Category\Preset;
 use HomefinanceBundle\Entity\Administration;
 use HomefinanceBundle\Entity\BankAccount;
 use HomefinanceBundle\Entity\Category;
@@ -95,6 +97,11 @@ class ManageController extends DefaultController {
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($administration);
+
+            $categoryPreset = new Preset();
+            $rootCategory = $categoryPreset->createPreset($administration);
+            $em->persist($rootCategory);
+
             $em->flush();
             $this->addFlash('success', 'administration.updated');
 
