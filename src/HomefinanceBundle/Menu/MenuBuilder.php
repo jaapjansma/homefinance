@@ -43,6 +43,7 @@ class MenuBuilder
         $menu->addChild('profile_menu.edit_profile', array('route' => 'profile'));
         $menu->addChild('profile_menu.change_password', array('route' => 'profile_change_password'));
         $menu->addChild('profile_menu.manage_administrations', array('route' => 'manage_administrations'));
+        $menu->addChild('profile_menu.logout', array('route' => 'logout'));
         return $menu;
     }
 }

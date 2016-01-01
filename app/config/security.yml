@@ -29,6 +29,7 @@ security:
                 key:      "%secret%"
                 lifetime: 7257600 # 3 months in seconds
                 path:     /
+                name: REMEMBER_ME
                 remember_me_parameter: _remember_me #field to click for remember login
                 # by default, the feature is enabled by checking a
                 # checkbox in the login form (see below), uncomment the

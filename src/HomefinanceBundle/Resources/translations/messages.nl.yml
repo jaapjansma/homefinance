@@ -2,6 +2,7 @@ profile_menu:
   edit_profile: Bewerk je profiel
   change_password: Wijzig wachtwoord
   manage_administrations: Je administraties
+  logout: Uitloggen
 
 action_menu:
   bank_accounts: Bankrekeningen
