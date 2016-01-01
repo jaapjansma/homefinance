@@ -19,7 +19,7 @@ class Preset {
         $builder->addChild($inkomsten, 'Werk', Type::INCOME);
         $builder->addChild($inkomsten, 'Overige inkomsten', Type::INCOME);
 
-        $huishoudelijke_uitgaven = $builder->addChild($root, 'Huishoudelijke uithave', Type::EXPENSE);
+        $huishoudelijke_uitgaven = $builder->addChild($root, 'Huishoudelijke uitgaven', Type::EXPENSE);
         $builder->addChild($huishoudelijke_uitgaven, 'Boodschappen', Type::EXPENSE);
         $builder->addChild($huishoudelijke_uitgaven, 'Persoonlijke verzorging', Type::EXPENSE);
         $builder->addChild($huishoudelijke_uitgaven, 'Huishoudelijke artikelen', Type::EXPENSE);
