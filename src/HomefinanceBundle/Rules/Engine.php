@@ -34,15 +34,19 @@ class Engine {
     public function triggerRule(Transaction $transaction, Rule $rule) {
         $areConditionValid = $this->areConditionsValid($transaction, $rule);
         if ($areConditionValid) {
-            $this->executeActions($transaction, $rule);
+            return $this->executeActions($transaction, $rule);
         }
+        return false;
     }
 
     protected function executeActions(Transaction $transaction, Rule $rule) {
+        $actions = 0;
         foreach($rule->getActions() as $action) {
             $actionClass = $this->factory->getActionClass($action->getAction());
             $actionClass->executeAction($transaction, $action);
+            $actions++;
         }
+        return $action;
     }
 
     protected function areConditionsValid(Transaction $transaction, Rule $rule) {

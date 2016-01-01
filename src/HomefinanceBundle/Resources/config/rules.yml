@@ -30,6 +30,11 @@ services:
       arguments: [@translator]
       tags:
         - { name: rules.conditions, alias: check_name }
+  homefinace.rules.conditions.description_starts_with:
+        class: HomefinanceBundle\Rules\Conditions\DescriptionStartsWith
+        arguments: [@translator]
+        tags:
+          - { name: rules.conditions, alias: description_starts_with }
   homefinace.rules.actions.set_category:
       class: HomefinanceBundle\Rules\Actions\SetCategory
       arguments: [@doctrine.orm.default_entity_manager, @translator, @homefinance.category.manager]

@@ -40,6 +40,7 @@ transaction.import.count: Er zijn %count% transacties geimporteerd.
 transaction.import.skipped: Er zijn %skipped% transacties overgelsagen
 
 rule.added: Regel toegevoegd
+rule.executed: Regel uitgevoerd. Er zijn %count% transactie(s) gematched.
 condition.edited: Conditie opgeslagen
 action.edited: Actie opgeslagen
 rule.deleted: Regel verwijderd

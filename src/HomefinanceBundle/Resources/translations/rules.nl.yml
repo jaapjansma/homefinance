@@ -28,6 +28,10 @@ rule.action.delete: Verwijder actie
 rule.action.delete_confirm: Weet u zeker dat u deze actie wilt verwijderen?
 action.deleted: Actie verwijderd
 
+rules.conditions.description_starts_with.label: Als omschrijving begint met '%description%'
+rules.conditions.description_starts_with: Omschrijving begint met
+rules.condition.description_starts_with.description.label: Omschrijving begint met
+
 rules.conditions.check_name.label: Als naam gelijk is aan %name%
 rules.conditions.check_name.name: Match naam
 rules.condition.check_name.name.label: Als naam gelijk is aan

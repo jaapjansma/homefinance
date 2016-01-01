@@ -19,6 +19,7 @@
                     {{ 'rule'|trans() }}
                     <span class="pull-right">
                     {% if (has_access_to_administration(app.user, administration, 'Edit')) %}
+                        <a class="btn btn-success btn-xs" role="button" href="{{ url('run_rule', {'rule_id': rule.id}) }}" title="{{ 'rule.run'|trans }}"><i class="glyphicon glyphicon-triangle-right"></i></a>
                         <a class="btn btn-danger btn-xs" role="button" href="{{ url('delete_rule', {'rule_id': rule.id}) }}" title="{{ 'rule.delete'|trans() }}" onclick="return confirm('{{ 'rule.delete_confirm'|trans }}');"><i class="glyphicon glyphicon-trash"></i></a>
                     {% endif %}
                 </div>

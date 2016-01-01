@@ -79,6 +79,37 @@ class RulesController extends DefaultController
     }
 
     /**
+     * @Route("/{rule_id}/run", name="run_rule")
+     *
+     * @param Request $request
+     * @param $rule_id
+     * @return Response
+     */
+    public function runRules(Request $request, $rule_id) {
+        $em = $this->getDoctrine()->getManager();
+        $engine = $this->get('homefinance.rules.engine');
+        $administration = $this->checkCurrentAdministration(Permission::VIEW);
+        $repo = $this->getDoctrine()->getRepository('HomefinanceBundle:Transaction');
+
+        $transactions = $repo->findUnprocessedByAdministration($administration);
+
+        $rule_repo = $this->getDoctrine()->getRepository('HomefinanceBundle:Rule');
+        $rule = $rule_repo->findOneByIdAndAdministration($administration, $rule_id);
+
+        $transactions_processed = 0;
+        foreach($transactions as $transaction) {
+            if ($engine->triggerRule($transaction, $rule)) {
+                $em->persist($transaction);
+                $transactions_processed++;
+            }
+        }
+
+        $this->addFlash('success', $this->get('translator')->trans('rule.executed', array('%count%' => $transactions_processed)));
+        $em->flush();
+        return $this->redirect($this->generateUrl('rules'));
+    }
+
+    /**
      * @Route("/{rule_id}/add_condition", name="add_condition")
      *
      * @param Request $request
