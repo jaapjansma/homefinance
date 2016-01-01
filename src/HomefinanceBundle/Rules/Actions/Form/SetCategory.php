@@ -28,8 +28,7 @@ class SetCategory extends Form {
             ->add('category', 'entity', array(
                 'class' => 'HomefinanceBundle:Category',
                 'choices' => $this->categoryManager->allLeafCategories(),
-                'choice_label' => 'title',
-                'group_by' => 'parent.indentedTitle',
+                'choice_label' => 'indentedTitle',
                 'label' => 'rules.action.set_category.category.label',
                 'empty_data'  => null,
                 'empty_value' => "rules.action.set_category.category.empty",

@@ -23,8 +23,7 @@ class Transaction extends AbstractType
             ->add('category', 'entity', array(
                 'class' => 'HomefinanceBundle:Category',
                 'choices' => $options['categories'],
-                'choice_label' => 'title',
-                'group_by' => 'parent.indentedTitle',
+                'choice_label' => 'indentedTitle',
                 'label' => 'transaction.category.label',
                 'empty_data'  => null,
                 'empty_value' => "transaction.category.empty",
