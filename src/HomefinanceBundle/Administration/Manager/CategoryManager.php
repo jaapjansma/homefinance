@@ -71,6 +71,16 @@ class CategoryManager
             }
         }
 
+        $sortedCategories = array();
+        foreach($categories as $category) {
+            $sortedCategories[$category->getIndentedTitle()] = $category;
+        }
+        ksort($sortedCategories);
+        $categories = array();
+        foreach($sortedCategories as $category) {
+            $categories[$category->getId()] = $category;
+        }
+
         return $categories;
     }
 
