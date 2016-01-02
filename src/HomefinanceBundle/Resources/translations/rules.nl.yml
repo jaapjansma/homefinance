@@ -10,6 +10,8 @@ rule.add_condition: Voeg conditie toe
 rules.add_condition.title: Voeg conditie toe
 rules.condition.condition.label: Conditie
 rules.condition.condition.empty: -- Selecteer een conditie --
+rules.condition.save_add_action.btn-label: Opslaan en voeg actie toe
+rules.condition.save_add_condition.btn-label: Opslaan en voeg nieuwe conditie toe
 rules.condition.update.btn-label: Opslaan
 rules.edit_condition.title: Bewerk conditie
 rule.condition.edit: Bewerk conditie
@@ -22,6 +24,7 @@ rules.add_action.title: Voeg actie toe
 rules.action.action.label: Actie
 rules.action.action.empty: -- Selecteer een actie --
 rules.action.update.btn-label: Opslaan
+rules.action.save_add_condition.btn-label: Opslaan en voeg nog een actie toe
 rules.edit_action.title: Bewerk actie
 rule.action.edit: Bewerk actie
 rule.action.delete: Verwijder actie

@@ -41,10 +41,13 @@ class ActionForm extends AbstractType
                 'empty_data'  => null,
                 'empty_value' => "rules.action.action.empty",
             ))
+            ->add('actions', 'form_actions');
+
+        $builder->get('actions')
             ->add('save', 'submit', array(
                 'label' => 'rules.action.update.btn-label',
                 'attr' => array(
-                    'class' => 'btn btn-lg btn-primary',
+                    'class' => 'btn btn-lg btn-success',
                 ),
             ))
         ;

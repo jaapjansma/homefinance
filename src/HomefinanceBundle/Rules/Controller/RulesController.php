@@ -54,7 +54,7 @@ class RulesController extends DefaultController
         $em->flush();
         $this->addFlash('success', 'rule.added');
 
-        return $this->redirect($this->generateUrl('rules'));
+        return $this->redirect($this->generateUrl('add_condition', array('rule_id' => $rule->getId())));
     }
 
     /**
@@ -125,6 +125,18 @@ class RulesController extends DefaultController
         $condition->setRule($rule);
 
         $form = $this->createForm('rules_condition', $condition);
+        $form->get('actions')->add('save_add_condition', 'submit', array(
+            'label' => 'rules.condition.save_add_condition.btn-label',
+            'attr' => array(
+                'class' => 'btn btn-lg btn-primary',
+            ),
+        ));
+        $form->get('actions')->add('save_add_action', 'submit', array(
+            'label' => 'rules.condition.save_add_action.btn-label',
+            'attr' => array(
+                'class' => 'btn btn-lg btn-warning',
+            ),
+        ));
         $form->handleRequest($request);
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -133,10 +145,20 @@ class RulesController extends DefaultController
             $this->addFlash('success', 'condition.edited');
 
             if ($factory->hasConditionForm($condition)) {
-                return $this->redirect($this->generateUrl('edit_condition', array(
+                $params = array(
                     'rule_id' => $rule_id,
                     'condition_id' => $condition->getId(),
-                )));
+                );
+                if ($form->get('actions')->get('save_add_condition')->isClicked()) {
+                    $params['next'] = 'condition';
+                } elseif ($form->get('actions')->get('save_add_action')->isClicked()) {
+                    $params['next'] = 'action';
+                }
+                return $this->redirect($this->generateUrl('edit_condition', $params));
+            } elseif ($form->get('actions')->get('save_add_condition')->isClicked()) {
+                return $this->redirect($this->generateUrl('add_condition', array('rule_id' => $rule_id)));
+            } elseif ($form->get('actions')->get('save_add_action')->isClicked()) {
+                return $this->redirect($this->generateUrl('add_action', array('rule_id' => $rule_id)));
             }
             return $this->redirect($this->generateUrl('rules'));
         }
@@ -172,14 +194,15 @@ class RulesController extends DefaultController
     }
 
     /**
-     * @Route("/{rule_id}/edit_condition/{condition_id}", name="edit_condition")
+     * @Route("/{rule_id}/edit_condition/{condition_id}/{next}", defaults={"next"=null}, name="edit_condition")
      *
      * @param Request $request
      * @param $rule_id
      * @param $condition_id
+     * @param $next
      * @return Response
      */
-    public function editCondition(Request $request, $rule_id, $condition_id) {
+    public function editCondition(Request $request, $rule_id, $condition_id, $next=null) {
         $factory = $this->get('homefinance.rules.factory');
         $administration = $this->checkCurrentAdministration(Permission::EDIT);
         $rule_repo = $this->getDoctrine()->getRepository('HomefinanceBundle:Rule');
@@ -197,6 +220,12 @@ class RulesController extends DefaultController
             $em->persist($condition);
             $em->flush();
             $this->addFlash('success', 'condition.edited');
+
+            if ($next == 'condition') {
+                return $this->redirect($this->generateUrl('add_condition', array('rule_id' => $rule_id)));
+            } elseif ($next == 'action') {
+                return $this->redirect($this->generateUrl('add_action', array('rule_id' => $rule_id)));
+            }
 
             return $this->redirect($this->generateUrl('rules'));
         }
@@ -224,6 +253,12 @@ class RulesController extends DefaultController
         $action->setRule($rule);
 
         $form = $this->createForm('rules_action', $action);
+        $form->get('actions')->add('save_add_action', 'submit', array(
+            'label' => 'rules.action.save_add_condition.btn-label',
+            'attr' => array(
+                'class' => 'btn btn-lg btn-primary',
+            ),
+        ));
         $form->handleRequest($request);
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -232,10 +267,18 @@ class RulesController extends DefaultController
             $this->addFlash('success', 'action.edited');
 
             if ($factory->hasActionForm($action)) {
-                return $this->redirect($this->generateUrl('edit_action', array(
+                $params = array(
                     'rule_id' => $rule_id,
                     'action_id' => $action->getId(),
-                )));
+                );
+                if ($form->get('actions')->get('save_add_action')->isClicked()) {
+                    $params['next'] = 'action';
+                }
+                return $this->redirect($this->generateUrl('edit_action', $params));
+            }
+
+            if ($form->get('actions')->get('save_add_action')->isClicked()) {
+                return $this->redirect($this->generateUrl('add_action', array('rule_id' => $rule_id)));
             }
             return $this->redirect($this->generateUrl('rules'));
         }
@@ -246,14 +289,15 @@ class RulesController extends DefaultController
     }
 
     /**
-     * @Route("/{rule_id}/edit_action/{action_id}", name="edit_action")
+     * @Route("/{rule_id}/edit_action/{action_id}/{next}", defaults={"next"=null}, name="edit_action")
      *
      * @param Request $request
      * @param $rule_id
      * @param $action_id
+     * @param $next
      * @return Response
      */
-    public function editAction(Request $request, $rule_id, $action_id) {
+    public function editAction(Request $request, $rule_id, $action_id, $next=null) {
         $factory = $this->get('homefinance.rules.factory');
         $administration = $this->checkCurrentAdministration(Permission::EDIT);
         $rule_repo = $this->getDoctrine()->getRepository('HomefinanceBundle:Rule');
@@ -271,6 +315,10 @@ class RulesController extends DefaultController
             $em->persist($action);
             $em->flush();
             $this->addFlash('success', 'action.edited');
+
+            if ($next == 'action') {
+                return $this->redirect($this->generateUrl('add_action', array('rule_id' => $rule_id)));
+            }
 
             return $this->redirect($this->generateUrl('rules'));
         }

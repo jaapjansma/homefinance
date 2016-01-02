@@ -13,6 +13,9 @@
 {% block form %}
 
     {% for rule in rules %}
+        {% if (loop.first or (loop.index % 3) == 1) %}
+            <div class="row">
+        {% endif %}
         <div class="col-md-4">
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -73,9 +76,10 @@
                 </div>
             </div>
         </div>
+        {% if (loop.last or (loop.index % 3) == 0) %}
+            </div>
+        {% endif %}
     {% endfor %}
-
-    <div class="clearfix"></div>
 
     {% if (has_access_to_administration(app.user, administration, 'Edit')) %}
         <a class="btn btn-success" href="{{ url('add_rule') }}" role="button"><i class="glyphicon glyphicon-plus"></i> {{ 'rule.add'|trans() }}</a>
