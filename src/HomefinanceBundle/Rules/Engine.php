@@ -46,7 +46,7 @@ class Engine {
             $actionClass->executeAction($transaction, $action);
             $actions++;
         }
-        return $action;
+        return $actions;
     }
 
     protected function areConditionsValid(Transaction $transaction, Rule $rule) {

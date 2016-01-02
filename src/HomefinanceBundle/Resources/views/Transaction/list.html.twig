@@ -12,15 +12,74 @@
 
 {% block form %}
 
-    {%  if (years is defined) %}
     <div class="btn-group">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {{ year }} <span class="caret"></span>
+            {{ filter.get('year') }} <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
-            {% for y in years %}
-                <li><a href="{{ url(page, { 'year': y}) }}">{{ y }}</a></li>
+            {% for y in filterFactory.getYears(administration) %}
+                <li><a href="{{ url(page, { 'filter': 'year', 'value': y}) }}">{{ y }}</a></li>
             {% endfor %}
+        </ul>
+    </div>
+    <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {% if (filter.get('month')) %}{{ filterFactory.getMonth(administration, filter.get('month')) }}{% else %}{{ 'transaction.filter.month'|trans }}{% endif %} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            {% if (filter.get('month')) %}
+            <li><a href="{{ url(page, {'filter':'month'}) }}">{{ 'transaction.filter.reset.month'|trans }}</a></li>
+            {% endif %}
+            {% for m,month in filterFactory.getMonths(administration) %}
+                <li><a href="{{ url(page, { 'filter': 'month', 'value': m}) }}">{{ month }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {% if (filter.get('category')) %}{{ filterFactory.getCategory(administration, filter.get('category')) }}{% else %}{{ 'transaction.filter.category'|trans }}{% endif %} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            {% if (filter.get('category')) %}
+                <li><a href="{{ url(page, {'filter':'category'}) }}">{{ 'transaction.filter.reset.category'|trans }}</a></li>
+            {% endif %}
+            {% for category in filterFactory.getCategories(administration) %}
+                <li><a href="{{ url(page, { 'filter': 'category', 'value': category.slug}) }}">{{ category.indentedTitle }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {% if (filter.get('tag')) %}{{ filterFactory.getTag(administration, filter.get('tag')) }}{% else %}{{ 'transaction.filter.tag'|trans }}{% endif %} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            {% if (filter.get('tag')) %}
+                <li><a href="{{ url(page, {'filter':'tag'}) }}">{{ 'transaction.filter.reset.tag'|trans }}</a></li>
+            {% endif %}
+            {% for tag in filterFactory.getTags(administration) %}
+                <li><a href="{{ url(page, { 'filter': 'tag', 'value': tag.slug}) }}">{{ tag.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% if (showProcessedFilter) %}
+    <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {% if (filter.get('processed') is not null) %}
+                {% if filter.get('processed') %}
+                    {{ 'transaction.filter.processed.yes'|trans }}
+                {% else %}
+                    {{ 'transaction.filter.processed.no'|trans }}
+                {% endif %}
+            {% else %}
+                {{ 'transaction.filter.processed'|trans }}
+            {% endif %} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            {% if (filter.get('processed') is not null) %}
+                <li><a href="{{ url(page, {'filter':'processed'}) }}">{{ 'transaction.filter.reset.processed'|trans }}</a></li>
+            {% endif %}
+            <li><a href="{{ url(page, { 'filter': 'processed', 'value': 1}) }}">{{ 'transaction.filter.processed.yes'|trans }}</a></li>
+            <li><a href="{{ url(page, { 'filter': 'processed', 'value': 0}) }}">{{ 'transaction.filter.processed.no'|trans }}</a></li>
         </ul>
     </div>
     {% endif %}
@@ -46,7 +105,7 @@
                 <td class="text-right">&euro; {{ transaction.amount|number_format(2, ',', '.') }}</td>
                 <td class="text-right">
                     {% if (has_access_to_administration(app.user, administration, 'Edit')) %}
-                        <a href="{{ url('transaction_edit', {'id': transaction.id}) }}" class="btn btn-xs btn-success">
+                        <a href="{{ url('transaction_edit', {'id': transaction.id, 'redirect': page}) }}" class="btn btn-xs btn-success">
                             <i class="glyphicon glyphicon-pencil"></i>&nbsp; {{ 'transaction.edit'|trans }}
                         </a>
                     {% endif %}

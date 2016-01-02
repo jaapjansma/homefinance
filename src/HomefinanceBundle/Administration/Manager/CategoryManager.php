@@ -39,12 +39,13 @@ class CategoryManager
         return $this->entityManager;
     }
 
-    public function allToplevelOrLevelOne() {
-        $user = $this->getUser();
-        if (!$user) {
+    public function allToplevelOrLevelOne(Administration $administration) {
+        if (!$administration) {
+            $administration = $this->getCurrentAdministration();
+        }
+        if (!$administration) {
             return array();
         }
-        $administration = $this->administrationManager->getCurrentAdministration($user);
         $repo = $this->entityManager->getRepository('HomefinanceBundle:Category');
 
         $categories = $repo->getChildrenByAdministration($administration, false, null, 'ASC', true);
@@ -56,12 +57,28 @@ class CategoryManager
         return $categories;
     }
 
-    public function allLeafCategories() {
-        $user = $this->getUser();
-        if (!$user) {
+    public function allCategories(Administration $administration) {
+        if (!$administration) {
+            $administration = $this->getCurrentAdministration();
+        }
+        if (!$administration) {
             return array();
         }
-        $administration = $this->administrationManager->getCurrentAdministration($user);
+        $repo = $this->entityManager->getRepository('HomefinanceBundle:Category');
+
+        $categories = $repo->getChildrenByAdministration($administration);
+        $categories = $this->sortCategoriesAlphabetically($categories);
+
+        return $categories;
+    }
+
+    public function allLeafCategories(Administration $administration=null) {
+        if (!$administration) {
+            $administration = $this->getCurrentAdministration();
+        }
+        if (!$administration) {
+            return array();
+        }
         $repo = $this->entityManager->getRepository('HomefinanceBundle:Category');
 
         $categories = $repo->getChildrenByAdministration($administration);
@@ -71,17 +88,30 @@ class CategoryManager
             }
         }
 
-        $sortedCategories = array();
-        foreach($categories as $category) {
-            $sortedCategories[$category->getIndentedTitle()] = $category;
-        }
-        ksort($sortedCategories);
-        $categories = array();
-        foreach($sortedCategories as $category) {
-            $categories[$category->getId()] = $category;
-        }
+        $categories = $this->sortCategoriesAlphabetically($categories);
 
         return $categories;
+    }
+
+    protected function sortCategoriesAlphabetically($categories) {
+        $unsortedCategories = array();
+        foreach($categories as $category) {
+            $unsortedCategories[$category->getIndentedTitle()] = $category;
+        }
+        ksort($unsortedCategories, SORT_NATURAL);
+        $sortedCategories = array();
+        foreach($unsortedCategories as $category) {
+            $sortedCategories[$category->getId()] = $category;
+        }
+        return $sortedCategories;
+    }
+
+    protected function getCurrentAdministration() {
+        $user = $this->getUser();
+        if (!$user) {
+            return false;
+        }
+        return $this->administrationManager->getCurrentAdministration($user);
     }
 
     /**

@@ -66,6 +66,16 @@ tag.edit.title: Bewerk tag
 tag.delete: Verwijderen
 tag.delete_confirm: Weet je zeker dat je deze tag wilt verwijderen?
 
+transaction.filter.reset.processed: Alle transacties
+transaction.filter.processed: Verwerkte en onverwerkte transacties
+transaction.filter.processed.yes: Alleen verwerkte transacties
+transaction.filter.processed.no: Onverwerkte transacties
+transaction.filter.category: Categorie
+transaction.filter.month: Maand
+transaction.filter.reset.month: Alle maanden
+transaction.filter.reset.category: Alle categorien
+transaction.filter.tag: Tag
+transaction.filter.reset.tag: Alle tags
 transaction.add.title: Transactie
 transaction.state.is_processed: Verwerkt
 transaction.state.unprocessed: Nog te verwerken

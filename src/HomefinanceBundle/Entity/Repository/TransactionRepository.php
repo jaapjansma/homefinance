@@ -6,6 +6,7 @@
 namespace HomefinanceBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use HomefinanceBundle\Administration\Filter\Filter;
 use HomefinanceBundle\Entity\Administration;
 use HomefinanceBundle\Entity\Transaction;
 
@@ -13,6 +14,30 @@ class TransactionRepository extends EntityRepository {
 
     public function findByAdministration(Administration $administration) {
         return parent::findBy(array('administration' => $administration), array('date' => 'desc'));
+    }
+
+    public function findByAdministrationAndFilter(Administration $administration, Filter $filter) {
+        $qb = $this->createQueryBuilder('transaction');
+        $qb->where('transaction.administration = :administration');
+        $qb->orderBy('transaction.date', 'DESC');
+        $qb->setParameter(':administration', $administration);
+
+        $filter->alterQueryBuilder($qb);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findUnprocessedByAdministrationAndFilter(Administration $administration, Filter $filter) {
+        $qb = $this->createQueryBuilder('transaction');
+        $qb->where('transaction.administration = :administration');
+        $qb->andWhere('transaction.is_processed = :processed');
+        $qb->orderBy('transaction.date', 'DESC');
+        $qb->setParameter(':administration', $administration);
+        $qb->setParameter(':processed', false);
+
+        $filter->alterQueryBuilder($qb);
+
+        return $qb->getQuery()->getResult();
     }
 
     public function findByAdministrationAndYear(Administration $administration, $year) {

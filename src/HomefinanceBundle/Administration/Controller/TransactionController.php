@@ -17,46 +17,62 @@ use Symfony\Component\HttpFoundation\Request;
 class TransactionController extends DefaultController {
 
     /**
-     * @Route("/transactions/unprocessed", name="list_unprocessed_transactions")
+     * @Route("/transactions/unprocessed{filter}/{value}", defaults={"filter"=null,"value"=null}, name="list_unprocessed_transactions")
      * @param Request $request
      * @return string
      */
-    public function listUnprocessedAction(Request $request) {
+    public function listUnprocessedAction(Request $request,$filter=null, $value=null) {
         $administration = $this->checkCurrentAdministration(Permission::VIEW);
+        $filterFactory = $this->get('homefinance.filter_factory');
+        $filterBag = $this->get('homefinance.filter_bag');
+        $filterObject = $filterBag->get('unprocessed_transactions');
+        if ($filter !== null) {
+            $filterObject->set($filter, $value);
+        }
+        $filterBag->set('unprocessed_transactions', $filterObject);
         $repo = $this->getDoctrine()->getRepository('HomefinanceBundle:Transaction');
 
-        $transactions = $repo->findUnprocessedByAdministration($administration);
+        $transactions = $repo->findUnprocessedByAdministrationAndFilter($administration, $filterObject);
 
         return $this->render('HomefinanceBundle:Transaction:list.html.twig', array(
             'transactions' => $transactions,
             'administration' => $administration,
             'title' => $this->get('translator')->trans('transactions.list.unprocessed.title', array(), 'administration'),
+            'filter' => $filterObject,
+            'filterFactory' => $filterFactory,
+            'showProcessedFilter' => false,
+            'page' => 'list_unprocessed_transactions',
         ));
     }
 
     /**
-     * @Route("/transactions/all/{year}", defaults={"year"=null}, name="list_all_transactions")
+     * @Route("/transactions/all/{filter}/{value}", defaults={"filter"=null,"value"=null}, name="list_all_transactions")
      * @param Request $request
      * @return string
      */
-    public function listAllTransactions(Request $request, $year=null) {
+    public function listAllTransactions(Request $request, $filter=null, $value=null) {
         $administration = $this->checkCurrentAdministration(Permission::VIEW);
-        if ($year === null) {
-            $now = new \DateTime();
-            $year = $now->format('Y');
+        $filterFactory = $this->get('homefinance.filter_factory');
+        $filterBag = $this->get('homefinance.filter_bag');
+        $filterObject = $filterBag->get('all_transactions');
+        if ($filter !== null) {
+            $filterObject->set($filter, $value);
         }
+        $filterBag->set('all_transactions', $filterObject);
+
         $repo = $this->getDoctrine()->getRepository('HomefinanceBundle:Transaction');
         $transactionManager = $this->get('homefinance.transaction.manager');
 
-        $transactions = $repo->findByAdministrationAndYear($administration, $year);
+        $transactions = $repo->findByAdministrationAndFilter($administration, $filterObject);
 
         return $this->render('HomefinanceBundle:Transaction:list.html.twig', array(
             'transactions' => $transactions,
             'administration' => $administration,
             'title' => $this->get('translator')->trans('transactions.list.all.title', array(), 'administration'),
-            'years' => $transactionManager->getDistinctYears($administration),
-            'year' => $year,
             'page' => 'list_all_transactions',
+            'filter' => $filterObject,
+            'filterFactory' => $filterFactory,
+            'showProcessedFilter' => true,
         ));
     }
 
@@ -200,19 +216,20 @@ class TransactionController extends DefaultController {
     }
 
     /**
-     * @Route("/transactions/{id}/edit", name="transaction_edit")
+     * @Route("/transactions/{id}/edit/{redirect}", defaults={"redirect"=null}, name="transaction_edit")
      *
      * @param Request $request
      * @param $id
+     * @param $redirect
      * @return string
      */
-    public function editTransactionAction(Request $request, $id) {
+    public function editTransactionAction(Request $request, $id, $redirect=null) {
         $administration = $this->checkCurrentAdministration(Permission::EDIT);
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('HomefinanceBundle:Transaction');
         $transaction = $repo->findOneByIdAndAdministration($administration, $id);
 
-        return $this->edit($transaction, $request);
+        return $this->edit($transaction, $request, $redirect);
     }
 
     /**
@@ -229,7 +246,7 @@ class TransactionController extends DefaultController {
         return $this->edit($transaction, $request);
     }
 
-    protected function edit(Transaction $transaction, Request $request) {
+    protected function edit(Transaction $transaction, Request $request,$redirect=nul) {
         $repo = $this->getDoctrine()->getRepository('HomefinanceBundle:BankAccount');
         $bank_accounts = $repo->choices($transaction->getAdministration());
         $transactionManager = $this->get('homefinance.transaction.manager');
@@ -277,6 +294,9 @@ class TransactionController extends DefaultController {
                 return $this->redirect($this->generateUrl('transaction_edit', array('id' => $nextTransaction->getId())));
             }
 
+            if ($redirect) {
+                return $this->redirect($this->generateUrl($redirect));
+            }
             return $this->redirect($this->generateUrl('list_unprocessed_transactions'));
         }
 

@@ -32,6 +32,12 @@ services:
   homefinance.administration.access_manager:
     class: %homefinance.administration.access_manager.class_name%
     arguments: [@homefinance.administration.manager]
+  homefinance.filter_bag:
+        class: HomefinanceBundle\Administration\Filter\FilterBag
+        arguments: [@session]
+  homefinance.filter_factory:
+          class: HomefinanceBundle\Administration\Filter\FilterFactory
+          arguments: [@homefinance.transaction.manager, @homefinance.category.manager, @homefinance.tag.manager, @homefinance.date_utils]
   homefinance.share.form.edit:
       class: %homefinance.share.form.edit.class_name%
       tags:

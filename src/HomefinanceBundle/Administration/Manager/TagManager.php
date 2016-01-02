@@ -36,23 +36,25 @@ class TagManager
         $this->tokenStorage = $tokenStorage;
     }
 
-    public function listAllTags() {
-        $user = $this->getUser();
-        if (!$user) {
+    public function listAllTags(Administration $administration=null) {
+        if (!$administration) {
+            $administration = $this->getCurrentAdministration();
+        }
+        if (!$administration) {
             return array();
         }
-        $administration = $this->administrationManager->getCurrentAdministration($user);
         $repo = $this->entityManager->getRepository('HomefinanceBundle:Tag');
         $tags = $repo->findByAdministration($administration);
         return $tags;
     }
 
-    public function loadOrCreateTags($tags) {
-        $user = $this->getUser();
-        if (!$user) {
+    public function loadOrCreateTags($tags, Administration $administration=null) {
+        if (!$administration) {
+            $administration = $this->getCurrentAdministration();
+        }
+        if (!$administration) {
             return array();
         }
-        $administration = $this->administrationManager->getCurrentAdministration($user);
         $repo = $this->entityManager->getRepository('HomefinanceBundle:Tag');
 
         $values = array();
@@ -67,6 +69,14 @@ class TagManager
             $values[] = $t;
         }
         return $values;
+    }
+
+    protected function getCurrentAdministration() {
+        $user = $this->getUser();
+        if (!$user) {
+            return false;
+        }
+        return $this->administrationManager->getCurrentAdministration($user);
     }
 
     /**
