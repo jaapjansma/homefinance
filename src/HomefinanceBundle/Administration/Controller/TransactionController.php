@@ -55,7 +55,8 @@ class TransactionController extends DefaultController {
             'administration' => $administration,
             'title' => $this->get('translator')->trans('transactions.list.all.title', array(), 'administration'),
             'years' => $transactionManager->getDistinctYears($administration),
-            'year' => $year
+            'year' => $year,
+            'page' => 'list_all_transactions',
         ));
     }
 

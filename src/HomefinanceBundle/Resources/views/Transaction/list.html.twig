@@ -19,7 +19,7 @@
         </button>
         <ul class="dropdown-menu">
             {% for y in years %}
-                <li><a href="{{ url('transactions_by_category', { 'year': y}) }}">{{ y }}</a></li>
+                <li><a href="{{ url(page, { 'year': y}) }}">{{ y }}</a></li>
             {% endfor %}
         </ul>
     </div>
