@@ -12,7 +12,7 @@ login.title: Inloggen
 login.email.placeholder: Je e-mailadres
 login.password.placeholder: Je wachtwoord
 login.login-btn-label: Inloggen
-login.remember-me: Onthoudt me
+login.remember-me: Onthoud me
 login.dont-have-an-account: Heb je nog geen account? <a href="%registration_link%">Maak dan eerst account aan</a>
 
 Authentication request could not be processed due to a system problem.: Authenticatie is niet gelukt.
