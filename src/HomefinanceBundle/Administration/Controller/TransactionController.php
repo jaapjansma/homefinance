@@ -259,7 +259,7 @@ class TransactionController extends DefaultController {
             $em = $this->getDoctrine()->getManager();
 
             $nextTransaction = null;
-            if ($form->get('save_process_next')->isClicked()) {
+            if ($form->has('save_process_next') && $form->get('save_process_next')->isClicked()) {
                 $nextTransaction = $transactionManager->getNextUnprocessedTransaction($transaction->getAdministration(), $transaction);
             }
 
