@@ -29,6 +29,7 @@ class Preset {
 
         $woon_lasten = $builder->addChild($root, 'Huis en inrichting', Type::EXPENSE);
         $builder->addChild($woon_lasten, 'Huur / Hypotheek', Type::EXPENSE);
+        $builder->addChild($woon_lasten, 'Gas, water en licht', Type::EXPENSE);
         $builder->addChild($woon_lasten, 'Inrichting', Type::EXPENSE);
         $builder->addChild($woon_lasten, 'Meubels', Type::EXPENSE);
         $builder->addChild($woon_lasten, 'Telefoon, internet en tv', Type::EXPENSE);
