@@ -39,7 +39,7 @@ class CategoryManager
         return $this->entityManager;
     }
 
-    public function allToplevelOrLevelOne(Administration $administration) {
+    public function allToplevelOrLevelOne(Administration $administration=null) {
         if (!$administration) {
             $administration = $this->getCurrentAdministration();
         }
