@@ -86,6 +86,9 @@
             {% if (form.offsetExists('save_process_next')) %}
             {{ form_widget(form.save_process_next) }}
             {% endif %}
+            {% if (form.offsetExists('cancel_and_next')) %}
+            {{ form_widget(form.cancel_and_next) }}
+            {% endif %}
         </div>
     </div>
 

@@ -269,6 +269,12 @@ class TransactionController extends DefaultController {
                     'class' => 'btn btn-lg btn-success',
                 ),
             ));
+            $form->add('cancel_and_next', 'submit', array(
+                'label' => 'transaction.cancel_and_next.btn-label',
+                'attr' => array(
+                    'class' => 'btn btn-lg btn-warning',
+                ),
+            ));
         }
 
         $form->handleRequest($request);
@@ -278,6 +284,9 @@ class TransactionController extends DefaultController {
             $nextTransaction = null;
             if ($form->has('save_process_next') && $form->get('save_process_next')->isClicked()) {
                 $nextTransaction = $transactionManager->getNextUnprocessedTransaction($transaction->getAdministration(), $transaction);
+            } elseif ($form->has('cancel_and_next') && $form->get('cancel_and_next')->isClicked()) {
+                $nextTransaction = $transactionManager->getNextUnprocessedTransaction($transaction->getAdministration(), $transaction);
+                return $this->redirect($this->generateUrl('transaction_edit', array('id' => $nextTransaction->getId())));
             }
 
             $transaction->setProcessed(true);
