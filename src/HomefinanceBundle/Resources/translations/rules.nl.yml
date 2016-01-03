@@ -31,6 +31,10 @@ rule.action.delete: Verwijder actie
 rule.action.delete_confirm: Weet u zeker dat u deze actie wilt verwijderen?
 action.deleted: Actie verwijderd
 
+rules.conditions.description_contains.label: Omschrijving bevat '%description%'
+rules.conditions.description_contains: Omschrijving bevat
+rules.condition.description_contains.description.label: Omschrijving bevat
+
 rules.conditions.description_starts_with.label: Als omschrijving begint met '%description%'
 rules.conditions.description_starts_with: Omschrijving begint met
 rules.condition.description_starts_with.description.label: Omschrijving begint met

@@ -35,6 +35,11 @@ services:
         arguments: [@translator]
         tags:
           - { name: rules.conditions, alias: description_starts_with }
+  homefinace.rules.conditions.description_contains:
+          class: HomefinanceBundle\Rules\Conditions\DescriptionContains
+          arguments: [@translator]
+          tags:
+            - { name: rules.conditions, alias: description_contains }
   homefinace.rules.actions.set_category:
       class: HomefinanceBundle\Rules\Actions\SetCategory
       arguments: [@doctrine.orm.default_entity_manager, @translator, @homefinance.category.manager]
