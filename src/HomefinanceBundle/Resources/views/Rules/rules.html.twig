@@ -12,6 +12,12 @@
 
 {% block form %}
 
+    {% if (has_access_to_administration(app.user, administration, 'Edit')) %}
+        <div class="margin-bottom">
+        <a class="btn btn-success" href="{{ url('add_rule') }}" role="button"><i class="glyphicon glyphicon-plus"></i> {{ 'rule.add'|trans() }}</a>
+        </div>
+    {% endif %}
+
     {% for rule in rules %}
         {% if (loop.first or (loop.index % 3) == 1) %}
             <div class="row">

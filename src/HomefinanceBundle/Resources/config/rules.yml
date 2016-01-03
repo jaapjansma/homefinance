@@ -30,6 +30,11 @@ services:
       arguments: [@translator]
       tags:
         - { name: rules.conditions, alias: check_name }
+  homefinace.rules.conditions.name_contains:
+        class: HomefinanceBundle\Rules\Conditions\NameContains
+        arguments: [@translator]
+        tags:
+          - { name: rules.conditions, alias: name_contains }
   homefinace.rules.conditions.description_starts_with:
         class: HomefinanceBundle\Rules\Conditions\DescriptionStartsWith
         arguments: [@translator]
