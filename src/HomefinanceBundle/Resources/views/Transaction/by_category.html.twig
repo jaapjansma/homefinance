@@ -53,7 +53,7 @@
                         </a></th>
                     {% else %}
                         <td><a href="{{ url('list_all_transactions_by_category', {'filter': 'year', 'value': year, 'filter2': 'category', 'value2': row.slug, 'reset': true}) }}">
-                            {{ row.getIndentedTitle() }}
+                            {{ row.getTitle() }}
                         </a></td>
                     {% endif %}
                 {% endif %}
