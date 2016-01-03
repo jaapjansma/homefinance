@@ -71,6 +71,7 @@ transaction.filter.processed: Verwerkte en onverwerkte transacties
 transaction.filter.processed.yes: Alleen verwerkte transacties
 transaction.filter.processed.no: Onverwerkte transacties
 transaction.filter.category: Categorie
+transaction.filter.no-category: Transactie zonder een categorie
 transaction.filter.month: Maand
 transaction.filter.reset.month: Alle maanden
 transaction.filter.reset.category: Alle categorien
@@ -121,10 +122,12 @@ share.revoke: Trek machtiging in
 
 transactions.by_tag.title: Overzicht per tag
 transactions.by_tag.total: Totaal
+transactions.by_tag.avg: Gem. / mnd
 
 transactions.by_category.title: Overzicht per categorie
 transactions.no_category: Ongecatgoriseerd
 transactions.by_category.total: Totaal
+transactions.by_category.avg: Gem. / mnd
 
 months.january: januari
 months.february: februari

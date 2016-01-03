@@ -11,6 +11,7 @@ use HomefinanceBundle\Administration\Manager\TagManager;
 use HomefinanceBundle\Administration\Manager\TransactionManager;
 use HomefinanceBundle\Entity\Administration;
 use HomefinanceBundle\Util\DateUtil;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class FilterFactory {
 
@@ -34,12 +35,18 @@ class FilterFactory {
      */
     protected $dateUtil;
 
-    public function __construct(TransactionManager $transactionManager, CategoryManager $categoryManager, TagManager $tagManager, DateUtil $dateUtil)
+    /**
+     * @var TranslatorInterface
+     */
+    protected $translator;
+
+    public function __construct(TransactionManager $transactionManager, CategoryManager $categoryManager, TagManager $tagManager, DateUtil $dateUtil, TranslatorInterface $translator)
     {
         $this->transactionManager = $transactionManager;
         $this->categoryManager = $categoryManager;
         $this->tagManager = $tagManager;
         $this->dateUtil = $dateUtil;
+        $this->translator = $translator;
     }
 
     public function getYears(Administration $administration) {
@@ -65,6 +72,9 @@ class FilterFactory {
     }
 
     public function getCategory(Administration $administration, $categorySlug) {
+        if ($categorySlug == 'empty') {
+            return $this->translator->trans('transaction.filter.no-category', array(), 'administration');
+        }
         $categories = $this->categoryManager->allCategories($administration);
         foreach ($categories as $cat) {
             if ($cat->getSlug() == $categorySlug) {

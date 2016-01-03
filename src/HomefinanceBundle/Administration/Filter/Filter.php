@@ -74,7 +74,7 @@ class Filter {
         }
         if ($this->month && in_array($this->month, array(1,2,3,4,5,6,7,8,9,10,11,12))) {
             $queryBuilder->andWhere('MONTH(transaction.date) = :month');
-            $queryBuilder->setParameter(':month', $this->year);
+            $queryBuilder->setParameter(':month', $this->month);
         }
         if ($this->processed != null && in_array($this->processed, array(0,1))) {
             $queryBuilder->andWhere('transaction.is_processed = :processed');
@@ -86,10 +86,14 @@ class Filter {
             $queryBuilder->setParameter(':tag', $this->tag);
         }
         if ($this->category !== null) {
-            $queryBuilder->leftJoin('transaction.category', 'category');
-            $queryBuilder->leftJoin('category.parent', 'parent');
-            $queryBuilder->andWhere('category.slug = :category or parent.slug = :category');
-            $queryBuilder->setParameter(':category', $this->category);
+            if ($this->category == 'empty') {
+                $queryBuilder->andWhere('transaction.category IS NULL');
+            } else {
+                $queryBuilder->leftJoin('transaction.category', 'category');
+                $queryBuilder->leftJoin('category.parent', 'parent');
+                $queryBuilder->andWhere('category.slug = :category or parent.slug = :category');
+                $queryBuilder->setParameter(':category', $this->category);
+            }
         }
         return $queryBuilder;
     }

@@ -31,18 +31,23 @@
                 <th class="text-right">{{ column }}</th>
             {% endfor %}
             <th class="text-right warning">{{ 'transactions.by_tag.total'|trans }}</th>
+            <th class="text-right warning">{{ 'transactions.by_tag.avg'|trans }}</th>
         </tr>
         </thead>
         <tbody>
         {% for row_key,row in rows %}
             {% set row_total = 0 %}
             <tr>
-                <td>{{ row }}</td>
+                <td>
+                    <a href="{{ url('list_all_transactions_by_tag', {'filter': 'year', 'value': year, 'filter2': 'tag', 'value2': row.slug, 'reset': true}) }}">
+                    {{ row.name }}
+                    </a>
+                </td>
                 {% for column_key, column in columns %}
                     <td class="text-right">
-                    {% if (pivotTable[row_key] is defined and pivotTable[row_key][column_key] is defined) %}
-                        {% set row_total = row_total + pivotTable[row_key][column_key]  %}
-                        &euro; {{ pivotTable[row_key][column_key]|number_format(2, ',', '.') }}
+                    {% if (pivotTable[row.id] is defined and pivotTable[row.id][column_key] is defined) %}
+                        {% set row_total = row_total + pivotTable[row.id][column_key]  %}
+                        &euro; {{ pivotTable[row.id][column_key]|number_format(2, ',', '.') }}
                     {% else %}
                         -
                     {% endif %}
@@ -50,6 +55,9 @@
                 {% endfor %}
                 <th class="text-right warning">
                     &euro; {{ row_total|number_format(2, ',', '.') }}
+                </th>
+                <th class="text-right warning">
+                    &euro; {{ (row_total/12)|number_format(2, ',', '.') }}
                 </th>
             </tr>
         {% endfor %}

@@ -37,7 +37,7 @@ services:
         arguments: [@session]
   homefinance.filter_factory:
           class: HomefinanceBundle\Administration\Filter\FilterFactory
-          arguments: [@homefinance.transaction.manager, @homefinance.category.manager, @homefinance.tag.manager, @homefinance.date_utils]
+          arguments: [@homefinance.transaction.manager, @homefinance.category.manager, @homefinance.tag.manager, @homefinance.date_utils, @translator]
   homefinance.share.form.edit:
       class: %homefinance.share.form.edit.class_name%
       tags:

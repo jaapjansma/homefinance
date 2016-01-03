@@ -12,6 +12,7 @@
 
 {% block form %}
 
+    {% if (yearFilter) %}
     <div class="btn-group">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {{ filter.get('year') }} <span class="caret"></span>
@@ -22,6 +23,7 @@
             {% endfor %}
         </ul>
     </div>
+    {% endif %}
     <div class="btn-group">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {% if (filter.get('month')) %}{{ filterFactory.getMonth(administration, filter.get('month')) }}{% else %}{{ 'transaction.filter.month'|trans }}{% endif %} <span class="caret"></span>
@@ -43,6 +45,7 @@
             {% if (filter.get('category')) %}
                 <li><a href="{{ url(page, {'filter':'category'}) }}">{{ 'transaction.filter.reset.category'|trans }}</a></li>
             {% endif %}
+            <li><a href="{{ url(page, {'filter': 'category', 'value': 'empty'}) }}">{{ 'transaction.filter.no-category'|trans }}</a></li>
             {% for category in filterFactory.getCategories(administration) %}
                 <li><a href="{{ url(page, { 'filter': 'category', 'value': category.slug}) }}">{{ category.indentedTitle }}</a></li>
             {% endfor %}

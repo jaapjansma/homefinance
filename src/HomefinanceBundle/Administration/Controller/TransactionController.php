@@ -29,6 +29,7 @@ class TransactionController extends DefaultController {
         if ($filter !== null) {
             $filterObject->set($filter, $value);
         }
+        $filterObject->set('year', null);
         $filterBag->set('unprocessed_transactions', $filterObject);
         $repo = $this->getDoctrine()->getRepository('HomefinanceBundle:Transaction');
 
@@ -42,15 +43,20 @@ class TransactionController extends DefaultController {
             'filterFactory' => $filterFactory,
             'showProcessedFilter' => false,
             'page' => 'list_unprocessed_transactions',
+            'yearFilter' => false,
         ));
     }
 
     /**
-     * @Route("/transactions/all/{filter}/{value}", defaults={"filter"=null,"value"=null}, name="list_all_transactions")
+     * @Route("/transactions/all/{filter}/{value}/{filter2}/{value2}", defaults={"filter"=null,"value"=null, "filter2"=null,"value2"=null}, name="list_all_transactions")
      * @param Request $request
+     * @param $filter
+     * @param $value
+     * @param $filter2
+     * @param $value2
      * @return string
      */
-    public function listAllTransactions(Request $request, $filter=null, $value=null) {
+    public function listAllTransactions(Request $request, $filter=null, $value=null,$filter2=null,$value2=null) {
         $administration = $this->checkCurrentAdministration(Permission::VIEW);
         $filterFactory = $this->get('homefinance.filter_factory');
         $filterBag = $this->get('homefinance.filter_bag');
@@ -58,11 +64,12 @@ class TransactionController extends DefaultController {
         if ($filter !== null) {
             $filterObject->set($filter, $value);
         }
+        if ($filter2 != null) {
+            $filterObject->set($filter2, $value2);
+        }
         $filterBag->set('all_transactions', $filterObject);
 
         $repo = $this->getDoctrine()->getRepository('HomefinanceBundle:Transaction');
-        $transactionManager = $this->get('homefinance.transaction.manager');
-
         $transactions = $repo->findByAdministrationAndFilter($administration, $filterObject);
 
         return $this->render('HomefinanceBundle:Transaction:list.html.twig', array(
@@ -73,6 +80,81 @@ class TransactionController extends DefaultController {
             'filter' => $filterObject,
             'filterFactory' => $filterFactory,
             'showProcessedFilter' => true,
+            'yearFilter' => true,
+        ));
+    }
+
+    /**
+     * @Route("/transactions/all_by_tag/{filter}/{value}/{filter2}/{value2}/{reset}", defaults={"filter"=null,"value"=null, "filter2"=null,"value2"=null, "reset"=false}, name="list_all_transactions_by_tag")
+     * @param Request $request
+     * @param $filter
+     * @param $value
+     * @param $filter2
+     * @param $value2
+     * @return string
+     */
+    public function listAllTransactionsByTag(Request $request, $filter=null, $value=null,$filter2=null,$value2=null,$reset=false) {
+        $administration = $this->checkCurrentAdministration(Permission::VIEW);
+        $filterFactory = $this->get('homefinance.filter_factory');
+        $filterBag = $this->get('homefinance.filter_bag');
+        $filterObject = $filterBag->get('all_transactions_by_tag', $reset);
+        if ($filter !== null) {
+            $filterObject->set($filter, $value);
+        }
+        if ($filter2 != null) {
+            $filterObject->set($filter2, $value2);
+        }
+        $filterBag->set('all_transactions', $filterObject);
+
+        $repo = $this->getDoctrine()->getRepository('HomefinanceBundle:Transaction');
+        $transactions = $repo->findByAdministrationAndFilter($administration, $filterObject);
+
+        return $this->render('HomefinanceBundle:Transaction:list.html.twig', array(
+            'transactions' => $transactions,
+            'administration' => $administration,
+            'title' => $this->get('translator')->trans('transactions.list.all.title', array(), 'administration'),
+            'page' => 'list_all_transactions_by_tag',
+            'filter' => $filterObject,
+            'filterFactory' => $filterFactory,
+            'showProcessedFilter' => true,
+            'yearFilter' => true,
+        ));
+    }
+
+    /**
+     * @Route("/transactions/all_by_category/{filter}/{value}/{filter2}/{value2}/{reset}", defaults={"filter"=null,"value"=null, "filter2"=null,"value2"=null, "reset"=false}, name="list_all_transactions_by_category")
+     * @param Request $request
+     * @param $filter
+     * @param $value
+     * @param $filter2
+     * @param $value2
+     * @return string
+     */
+    public function listAllTransactionsByCategory(Request $request, $filter=null, $value=null,$filter2=null,$value2=null,$reset=false) {
+        $administration = $this->checkCurrentAdministration(Permission::VIEW);
+        $filterFactory = $this->get('homefinance.filter_factory');
+        $filterBag = $this->get('homefinance.filter_bag');
+        $filterObject = $filterBag->get('all_transactions_by_category', $reset);
+        if ($filter !== null) {
+            $filterObject->set($filter, $value);
+        }
+        if ($filter2 != null) {
+            $filterObject->set($filter2, $value2);
+        }
+        $filterBag->set('all_transactions', $filterObject);
+
+        $repo = $this->getDoctrine()->getRepository('HomefinanceBundle:Transaction');
+        $transactions = $repo->findByAdministrationAndFilter($administration, $filterObject);
+
+        return $this->render('HomefinanceBundle:Transaction:list.html.twig', array(
+            'transactions' => $transactions,
+            'administration' => $administration,
+            'title' => $this->get('translator')->trans('transactions.list.all.title', array(), 'administration'),
+            'page' => 'list_all_transactions_by_category',
+            'filter' => $filterObject,
+            'filterFactory' => $filterFactory,
+            'showProcessedFilter' => true,
+            'yearFilter' => true,
         ));
     }
 
@@ -93,11 +175,7 @@ class TransactionController extends DefaultController {
         $result = $transactionManager->getTransactionsGroupedByTag($administration, $year);
         $months = $dateUtils->getMonths();
 
-        $tags = array();
         $allTags = $this->getDoctrine()->getRepository('HomefinanceBundle:Tag')->findByAdministration($administration);
-        foreach($allTags as $t) {
-            $tags[$t->getId()] = $t->getName();
-        }
 
         $pivotTable = array();
         foreach($result as $row) {
@@ -110,7 +188,7 @@ class TransactionController extends DefaultController {
         return $this->render('HomefinanceBundle:Transaction:by_tag.html.twig', array(
             'pivotTable' => $pivotTable,
             'columns' => $months,
-            'rows' => $tags,
+            'rows' => $allTags,
             'years' => $transactionManager->getDistinctYears($administration),
             'year' => $year
         ));

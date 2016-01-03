@@ -24,8 +24,8 @@ class FilterBag {
      * @param $name
      * @return Filter
      */
-    public function get($name) {
-        if (!$this->session->has('filter_'.$name)) {
+    public function get($name, $reset=false) {
+        if (!$this->session->has('filter_'.$name) || $reset) {
             $this->session->set('filter_'.$name, new Filter());
         }
         return $this->session->get('filter_'.$name);

@@ -33,6 +33,7 @@
                 <th class="text-right">{{ column }}</th>
             {% endfor %}
             <th class="text-right warning">{{ 'transactions.by_category.total'|trans }}</th>
+            <th class="text-right warning">{{ 'transactions.by_category.avg'|trans }}</th>
         </tr>
         </thead>
         <tbody>
@@ -40,12 +41,20 @@
             {% set row_total = 0 %}
             <tr>
                 {% if (row_key == 0) %}
-                    <td>{{ row }}</td>
+                    <td>
+                        <a href="{{ url('list_all_transactions_by_category', {'filter': 'year', 'value': year, 'filter2': 'category', 'value2': 'empty', 'reset': true}) }}">
+                        {{ row }}
+                        </a>
+                    </td>
                 {% else %}
                     {% if (row.level == 1) %}
-                        <th>{{ row.getIndentedTitle() }}</th>
+                        <th><a href="{{ url('list_all_transactions_by_category', {'filter': 'year', 'value': year, 'filter2': 'category', 'value2': row.slug, 'reset': true}) }}">
+                            {{ row.getIndentedTitle() }}
+                        </a></th>
                     {% else %}
-                        <td>{{ row.getIndentedTitle() }}</td>
+                        <td><a href="{{ url('list_all_transactions_by_category', {'filter': 'year', 'value': year, 'filter2': 'category', 'value2': row.slug, 'reset': true}) }}">
+                            {{ row.getIndentedTitle() }}
+                        </a></td>
                     {% endif %}
                 {% endif %}
 
@@ -64,6 +73,9 @@
                 <th class="text-right warning">
                     &euro; {{ row_total|number_format(2, ',', '.') }}
                 </th>
+                <th class="text-right warning">
+                    &euro; {{ (row_total/12)|number_format(2, ',', '.') }}
+                </th>
             </tr>
         {% endfor %}
             <tr>
@@ -75,6 +87,9 @@
                 {% endfor %}
                 <th class="text-right warning">
                     &euro; {{ row_total|number_format(2, ',', '.') }}
+                </th>
+                <th class="text-right warning">
+                    &euro; {{ (row_total/12)|number_format(2, ',', '.') }}
                 </th>
             </tr>
         </tbody>
