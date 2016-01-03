@@ -91,7 +91,7 @@ transaction.category.label: Categorie
 transaction.category.empty: -- Selecteer categorie --
 transaction.update.btn-label: Opslaan
 transaction.save_process_next.btn-label: Verwerk & Volgende
-transaction.cancel_and_next.btn-label: Skip & Volgende
+transaction.cancel_and_next.btn-label: Overslaan & Volgende
 transactions.list.unprocessed.title: Nog te verwerken transacties
 transactions.list.all.title: Alle transacties
 transaction.date: Datum
