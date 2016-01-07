@@ -23,17 +23,17 @@
         </ul>
     </div>
 
-    <table class="table table-striped table-hover table-condensed">
+    <table class="table table-striped table-hover table-condensed table-responsive">
         <thead>
         <tr>
             <th></th>
             {% set column_totals = { } %}
             {% for column_key,column in columns %}
                 {% set column_totals = column_totals|merge({ ('_'~column_key) : (0) }) %}
-                <th class="text-right">{{ column }}</th>
+                <th class="text-right"><small>{{ column }}</small></th>
             {% endfor %}
-            <th class="text-right warning">{{ 'transactions.by_category.total'|trans }}</th>
-            <th class="text-right warning">{{ 'transactions.by_category.avg'|trans }}</th>
+            <th class="text-right warning"><small>{{ 'transactions.by_category.total'|trans }}</small></th>
+            <th class="text-right warning"><small>{{ 'transactions.by_category.avg'|trans }}</small></th>
         </tr>
         </thead>
         <tbody>
@@ -43,17 +43,17 @@
                 {% if (row_key == 0) %}
                     <td>
                         <a href="{{ url('list_all_transactions_by_category', {'filter': 'year', 'value': year, 'filter2': 'category', 'value2': 'empty', 'reset': true}) }}">
-                        {{ row }}
+                        <small>{{ row }}</small>
                         </a>
                     </td>
                 {% else %}
                     {% if (row.level == 1) %}
                         <th><a href="{{ url('list_all_transactions_by_category', {'filter': 'year', 'value': year, 'filter2': 'category', 'value2': row.slug, 'reset': true}) }}">
-                            {{ row.getIndentedTitle() }}
+                            <small>{{ row.getIndentedTitle() }}</small>
                         </a></th>
                     {% else %}
                         <td><a href="{{ url('list_all_transactions_by_category', {'filter': 'year', 'value': year, 'filter2': 'category', 'value2': row.slug, 'reset': true}) }}">
-                            {{ row.getTitle() }}
+                            <small>{{ row.getTitle() }}</small>
                         </a></td>
                     {% endif %}
                 {% endif %}
@@ -64,17 +64,17 @@
                         {% set row_total = row_total + pivotTable[row_key][column_key]  %}
                         {% set column_total = column_totals['_'~column_key] + pivotTable[row_key][column_key]  %}
                         {% set column_totals = column_totals|merge({ ('_'~column_key) : (column_total) }) %}
-                        &euro; {{ pivotTable[row_key][column_key]|number_format(2, ',', '.') }}
+                        <small>&euro; {{ pivotTable[row_key][column_key]|number_format(2, ',', '.') }}</small>
                     {% else %}
                         -
                     {% endif %}
                     </td>
                 {% endfor %}
                 <th class="text-right warning">
-                    &euro; {{ row_total|number_format(2, ',', '.') }}
+                    <small>&euro; {{ row_total|number_format(2, ',', '.') }}</small>
                 </th>
                 <th class="text-right warning">
-                    &euro; {{ (row_total/12)|number_format(2, ',', '.') }}
+                    <small>&euro; {{ (row_total/12)|number_format(2, ',', '.') }}</small>
                 </th>
             </tr>
         {% endfor %}
@@ -83,13 +83,13 @@
                 {% set row_total = 0 %}
                 {% for column_key,column in columns %}
                     {% set row_total = row_total + column_totals['_'~column_key]  %}
-                    <th class="text-right">&euro; {{ column_totals['_'~column_key]|number_format(2, ',', '.') }}</th>
+                    <th class="text-right"><small>&euro; {{ column_totals['_'~column_key]|number_format(2, ',', '.') }}</small></th>
                 {% endfor %}
                 <th class="text-right warning">
-                    &euro; {{ row_total|number_format(2, ',', '.') }}
+                    <small>&euro; {{ row_total|number_format(2, ',', '.') }}</small>
                 </th>
                 <th class="text-right warning">
-                    &euro; {{ (row_total/12)|number_format(2, ',', '.') }}
+                    <small>&euro; {{ (row_total/12)|number_format(2, ',', '.') }}</small>
                 </th>
             </tr>
         </tbody>
