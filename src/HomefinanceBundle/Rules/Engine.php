@@ -50,6 +50,9 @@ class Engine {
     }
 
     protected function areConditionsValid(Transaction $transaction, Rule $rule) {
+        if ($transaction->isProcessed()) {
+            return false;
+        }
         $isValid = true;
         $firstCondition = true;
         foreach($rule->getConditions() as $condition) {
