@@ -12,9 +12,9 @@
 
 {% block form %}
 
-    <div class="margin-bottom">
+    <div class="margin-bottom row">
     {% if (yearFilter) %}
-    <div class="btn-group">
+    <div class="btn-group col-xs-12 col-md-1">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {{ filter.get('year') }} <span class="caret"></span>
         </button>
@@ -25,7 +25,7 @@
         </ul>
     </div>
     {% endif %}
-    <div class="btn-group">
+    <div class="btn-group col-xs-12 col-md-1">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {% if (filter.get('month')) %}{{ filterFactory.getMonth(administration, filter.get('month')) }}{% else %}{{ 'transaction.filter.month'|trans }}{% endif %} <span class="caret"></span>
         </button>
@@ -38,7 +38,7 @@
             {% endfor %}
         </ul>
     </div>
-    <div class="btn-group">
+    <div class="btn-group col-xs-12 col-md-2">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {% if (filter.get('category')) %}{{ filterFactory.getCategory(administration, filter.get('category')) }}{% else %}{{ 'transaction.filter.category'|trans }}{% endif %} <span class="caret"></span>
         </button>
@@ -52,7 +52,7 @@
             {% endfor %}
         </ul>
     </div>
-    <div class="btn-group">
+    <div class="btn-group col-xs-12 col-md-2">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {% if (filter.get('tag')) %}{{ filterFactory.getTag(administration, filter.get('tag')) }}{% else %}{{ 'transaction.filter.tag'|trans }}{% endif %} <span class="caret"></span>
         </button>
@@ -66,7 +66,7 @@
         </ul>
     </div>
     {% if (showProcessedFilter) %}
-    <div class="btn-group">
+    <div class="btn-group col-xs-12 col-md-2">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {% if (filter.get('processed') is not null) %}
                 {% if filter.get('processed') %}
@@ -128,5 +128,5 @@
         </div>
     {% endfor %}
     </div>
-    
+
 {% endblock %}
