@@ -12,6 +12,7 @@
 
 {% block form %}
 
+    <div class="margin-bottom">
     {% if (yearFilter) %}
     <div class="btn-group">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -86,35 +87,46 @@
         </ul>
     </div>
     {% endif %}
+    </div>
 
-    <table class="table table-striped table-hover table-condensed">
-        <thead>
-        <tr>
-            <th>{{ 'transaction.date'|trans  }}</th>
-            <th>{{ 'transaction.category'|trans }}</th>
-            <th>{{ 'transaction.bank_account'|trans }}</th>
-            <th>{{ 'transaction.name'|trans }}</th>
-            <th class="text-right">{{ 'transaction.amount'|trans }}</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for transaction in transactions %}
-            <tr>
-                <td>{{ transaction.date|date('d-m-Y') }}</td>
-                <td>{% if transaction.category %}{{ transaction.category.indentedTitle }}{% endif %}</td>
-                <td>{{ transaction.bankAccount.name }}</td>
-                <td>{{ transaction.name }}</td>
-                <td class="text-right">&euro; {{ transaction.amount|number_format(2, ',', '.') }}</td>
-                <td class="text-right">
-                    {% if (has_access_to_administration(app.user, administration, 'Edit')) %}
-                        <a href="{{ url('transaction_edit', {'id': transaction.id, 'redirect': page}) }}" class="btn btn-xs btn-success">
-                            <i class="glyphicon glyphicon-pencil"></i>&nbsp; {{ 'transaction.edit'|trans }}
-                        </a>
-                    {% endif %}
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="list-group">
+    {% for transaction in transactions %}
+        <div class="list-group-item {% if ((loop.index % 2) == 1) %}list-group-item-odd{% else %}list-group-item-even{% endif %} list-group-item-hover">
+            <div class="row">
+            <div class="col-md-1">
+                <strong>{{ transaction.date|date('d M') }}</strong><br />
+                {% if (transaction.isProcessed()) %}
+                    <span class="label label-success">{{ 'transaction.state.is_processed'|trans() }}</span>
+                {% else %}
+                    <span class="label label-warning">{{ 'transaction.state.unprocessed'|trans() }}</span>
+                {% endif %}
+            </div>
+            <div class="col-md-1">
+                <h4 class="text-right">&euro; {{ transaction.amount|number_format(2, ',', '.') }}</h4>
+            </div>
+            <div class="col-md-2">
+                {% if transaction.category %}{{ transaction.category.indentedTitle }}{% endif %}<br />
+                {% for tag in transaction.tags %}
+                    <span class="label label-info">{{ tag.name }}</span>
+                {% endfor %}
+            </div>
+            <div class="col-md-1">
+                {{ transaction.bankAccount.name }}
+            </div>
+            <div class="col-md-2">
+                <strong>{{ transaction.name }}</strong><br />
+                <small>{{ transaction.description }}</small>
+            </div>
+            <div class="col-md-2">
+                {% if (has_access_to_administration(app.user, administration, 'Edit')) %}
+                    <a href="{{ url('transaction_edit', {'id': transaction.id, 'redirect': page}) }}" class="btn btn-xs btn-success">
+                        <i class="glyphicon glyphicon-pencil"></i>&nbsp; {{ 'transaction.edit'|trans }}
+                    </a>
+                {% endif %}
+            </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+    
 {% endblock %}
