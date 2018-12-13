@@ -47,8 +47,12 @@ class RabobankCsv implements ImporterInterface {
     {
         $return = array();
         if (($handle = fopen($file->getRealPath(), "r")) !== FALSE) {
+            $rowNr = 0;
             while(($row = fgetcsv($handle)) !== FALSE) {
-                $return[] = $this->createTransactionFromRow($row, $administration);
+                if ($rowNr > 0) {
+                    $return[] = $this->createTransactionFromRow($row, $administration);
+                }
+                $rowNr++;
             }
             fclose($handle);
         }
@@ -69,25 +73,24 @@ class RabobankCsv implements ImporterInterface {
         if ($row[1] != 'EUR') {
             throw new InvalidCurrencyException();
         }
-        $transaction->setDate(new \DateTime($row[7])); //boekdatum
-        $amount = (float) $row[4];
-        if ($row[3] == 'D') {
-            $amount = (float) ($amount * -1.00);
-        }
+        $transaction->setDate(new \DateTime($row[4])); //datum
+
+        $amount = (float) str_replace(",", ".", $row[6]);
         $transaction->setAmount($amount);
 
-        $transaction->setIban($row[5]);
-        $transaction->setName($row[6]);
+        $transaction->setIban($row[8]);
+        $transaction->setName($row[9]);
 
-        $description = $row[10]."\r\n".$row[11]."\r\n".$row[12]."\r\n".$row[13]."\r\n".$row[14]."\r\n".$row[15]."\r\n".$row[16]."\r\n".$row[17]."\r\n".$row[18];
+        $description = $row[15]."\r\n".$row[16]."\r\n".$row[17]."\r\n".$row[18]."\r\n".$row[19]."\r\n".$row[20]."\r\n".$row[21]."\r\n".$row[22]."\r\n".$row[18];
         $description = trim($description);
         $transaction->setDescription($description);
-        if (empty($transaction->getName())) {
+        $transactionName = $transaction->getName();
+        if (empty($transactionName)) {
             $transaction->setName(strtok($description, "\r\n"));
         }
 
         $transaction->setSourceData(json_encode($row));
-        $transaction->setSourceId(md5(base64_encode(json_encode($row))));
+        $transaction->setSourceId($row[3]);
         return $transaction;
     }
 
