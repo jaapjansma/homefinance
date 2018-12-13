@@ -82,6 +82,7 @@ class RabobankCsv implements ImporterInterface {
         $transaction->setName($row[9]);
 
         $description = $row[15]."\r\n".$row[16]."\r\n".$row[17]."\r\n".$row[18]."\r\n".$row[19]."\r\n".$row[20]."\r\n".$row[21]."\r\n".$row[22]."\r\n".$row[18];
+        $description = preg_replace("/[\r\n]+/", "\r\n", $description);
         $description = trim($description);
         $transaction->setDescription($description);
         $transactionName = $transaction->getName();
