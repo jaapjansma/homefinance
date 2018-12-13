@@ -16,7 +16,7 @@
                 "name": "jquery/jquery",
                 "version": "1.11.1",
                 "dist": {
-                    "url": "http://code.jquery.com/jquery-1.11.1.js",
+                    "url": "https://code.jquery.com/jquery-1.11.1.js",
                     "type": "file"
                 }
             }
@@ -24,7 +24,7 @@
     ],
     "require": {
         "php": ">=5.3.9",
-        "symfony/symfony": "2.7.*",
+        "symfony/symfony": "2.8.*",
         "doctrine/orm": "~2.2,>=2.2.3,<2.5",
         "doctrine/dbal": "<2.5",
         "doctrine/doctrine-bundle": "~1.4",
@@ -36,7 +36,7 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "doctrine/doctrine-fixtures-bundle": "^2.2",
         "gedmo/doctrine-extensions": "dev-master",
-        "braincrafted/bootstrap-bundle": "^2.1",
+        "braincrafted/bootstrap-bundle": "2.*",
         "twbs/bootstrap": "3.*",
         "jquery/jquery":  "1.11.*",
         "doctrine/doctrine-migrations-bundle": "^1.0",
